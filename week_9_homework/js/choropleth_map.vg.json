@@ -1,38 +1,63 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "NBA Players per 100,000 Residents (by State)",
-  "width": 800,
-  "height": 500,
+  "title": "NBA Players per 100k Residents by State (Normalized, 2024 Population)",
+  "width": 900,
+  "height": 550,
   "projection": {"type": "albersUsa"},
-  "data": {
-    "url": "https://raw.githubusercontent.com/vega/vega-datasets/master/data/us-10m.json",
-    "format": {"type": "topojson", "feature": "states"}
-  },
-  "transform": [
+  "layer": [
     {
-      "lookup": "id",
-      "from": {
-        "data": {
-          "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/main/week_9_homework/data/nba_players_per_state_normalized.csv"
+      "data": {"sphere": true},
+      "mark": {"type": "geoshape", "fill": "#dcefff", "stroke": null}
+    },
+    {
+      "data": {"graticule": {"step": [20, 20]}},
+      "mark": {"type": "geoshape", "stroke": "#888", "strokeWidth": 0.5}
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/us-atlas@3/nation-10m.json",
+        "format": {"type": "topojson", "feature": "nation"}
+      },
+      "mark": {"type": "geoshape", "fill": "none", "stroke": "black", "strokeWidth": 1}
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json",
+        "format": {"type": "topojson", "feature": "states"}
+      },
+      "transform": [
+        {
+          "lookup": "id",
+          "from": {
+            "data": {"url": "data/nba_players_per_state_normalized.csv"},
+            "key": "FIPS",
+            "fields": ["State", "Players", "Population", "Players_per_100k"]
+          }
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.7},
+      "encoding": {
+        "color": {
+          "field": "Players_per_100k",
+          "type": "quantitative",
+          "title": "Players per 100k (2024)",
+          "scale": {
+            "domain": [0, 0.5, 1.0, 2.0, 3.0],
+            "range": ["#ffffcc", "#c2e699", "#78c679", "#238443"]
+          },
+          "legend": {
+            "title": "Players per 100k (2024)",
+            "format": ".1f",
+            "orient": "right"
+          }
         },
-        "key": "FIPS",
-        "fields": ["State","Players","Population","Players_per_100k"]
+        "tooltip": [
+          {"field": "State", "type": "nominal"},
+          {"field": "Players", "type": "quantitative", "title": "Total Players"},
+          {"field": "Population", "type": "quantitative", "title": "Population", "format": ","},
+          {"field": "Players_per_100k", "type": "quantitative", "title": "Players per 100k", "format": ".2f"}
+        ]
       }
     }
-  ],
-  "mark": {"type": "geoshape"},
-  "encoding": {
-    "color": {
-      "field": "Players_per_100k",
-      "type": "quantitative",
-      "title": "Players per 100k Residents",
-      "scale": {"scheme": "reds"}
-    },
-    "tooltip": [
-      {"field": "State", "type": "nominal"},
-      {"field": "Players", "type": "quantitative", "title": "Total Players"},
-      {"field": "Population", "type": "quantitative", "title": "Population", "format": ","},
-      {"field": "Players_per_100k", "type": "quantitative", "title": "Players per 100k", "format": ".2f"}
-    ]
-  }
+  ]
 }
