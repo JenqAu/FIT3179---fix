@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "NBA Players per 100,000 Residents (by State)",
+  "width": 800,
+  "height": 500,
+  "projection": {"type": "albersUsa"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/vega/vega-datasets/master/data/us-10m.json",
+    "format": {"type": "topojson", "feature": "states"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {"url": "data/nba_players_per_state_normalized.csv"},
+        "key": "State",
+        "fields": ["Players", "Population", "Players_per_100k"]
+      }
+    }
+  ],
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "Players_per_100k",
+      "type": "quantitative",
+      "title": "Players per 100k Residents",
+      "scale": {"scheme": "reds"}
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "State"},
+      {"field": "Players", "type": "quantitative", "title": "Total Players"},
+      {"field": "Population", "type": "quantitative", "title": "Population", "format": ","},
+      {"field": "Players_per_100k", "type": "quantitative", "title": "Players per 100k", "format": ".2f"}
+    ]
+  }
+}
