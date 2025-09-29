@@ -29,7 +29,7 @@
         {
           "lookup": "id",
           "from": {
-            "data": {"url": "data/nba_players_per_state_normalized.csv"},
+            "data": {"url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/nba_players_per_state_normalized.csv"},
             "key": "FIPS",
             "fields": ["State", "Players", "Population", "Players_per_100k"]
           }
