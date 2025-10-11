@@ -20,12 +20,10 @@
   <div id="choropleth_map"></div>
 
   <script type="text/javascript">
-    // Load Vega-Lite spec
-    var spec = "js/choropleth_map.vg.json";  // path to your NBA JSON file
-    vegaEmbed('#choropleth_map', spec).then(function(result) {
-      // Optional: you can access Vega view instance with result.view
-    }).catch(console.error);
+    vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', {actions: false}).catch(console.error);
+    vegaEmbed('#height_weight_chart', 'js/height_weight.vg.json', {actions: false}).catch(console.error);
   </script>
+
 
 </body>
 </html>

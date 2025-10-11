@@ -1,0 +1,146 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "NBA Player Height vs Weight (Interactive by Team)",
+  "width": 850,
+  "height": 550,
+  "data": {
+    "url": "data/nba_players_cleaned.csv"
+  },
+
+  "params": [
+    {
+      "name": "Team_select",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "ATL",
+          "BOS",
+          "BKN",
+          "CHA",
+          "CHI",
+          "CLE",
+          "DAL",
+          "DEN",
+          "DET",
+          "GSW",
+          "HOU",
+          "IND",
+          "LAC",
+          "LAL",
+          "MEM",
+          "MIA",
+          "MIL",
+          "MIN",
+          "NOP",
+          "NYK",
+          "OKC",
+          "ORL",
+          "PHI",
+          "PHX",
+          "POR",
+          "SAC",
+          "SAS",
+          "TOR",
+          "UTA",
+          "WAS"
+        ],
+        "labels": [
+          "Show All",
+          "Atlanta Hawks",
+          "Boston Celtics",
+          "Brooklyn Nets",
+          "Charlotte Hornets",
+          "Chicago Bulls",
+          "Cleveland Cavaliers",
+          "Dallas Mavericks",
+          "Denver Nuggets",
+          "Detroit Pistons",
+          "Golden State Warriors",
+          "Houston Rockets",
+          "Indiana Pacers",
+          "LA Clippers",
+          "LA Lakers",
+          "Memphis Grizzlies",
+          "Miami Heat",
+          "Milwaukee Bucks",
+          "Minnesota Timberwolves",
+          "New Orleans Pelicans",
+          "New York Knicks",
+          "Oklahoma City Thunder",
+          "Orlando Magic",
+          "Philadelphia 76ers",
+          "Phoenix Suns",
+          "Portland Trail Blazers",
+          "Sacramento Kings",
+          "San Antonio Spurs",
+          "Toronto Raptors",
+          "Utah Jazz",
+          "Washington Wizards"
+        ],
+        "name": "Filter by Team: "
+      }
+    }
+  ],
+
+  "transform": [
+    {"filter": "datum.height > 0 && datum.weight > 0"},
+    {
+      "filter": "Team_select == null || datum.team == Team_select"
+    }
+  ],
+
+  "encoding": {
+    "x": {
+      "field": "weight",
+      "type": "quantitative",
+      "title": "Weight (kg)"
+    },
+    "y": {
+      "field": "height",
+      "type": "quantitative",
+      "title": "Height (cm)"
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {"type": "circle", "opacity": 0.7, "size": 80},
+      "encoding": {
+        "color": {
+          "field": "team",
+          "type": "nominal",
+          "title": "Team",
+          "scale": {"scheme": "tableau10"}
+        },
+        "tooltip": [
+          {"field": "player", "type": "nominal", "title": "Player"},
+          {"field": "team", "type": "nominal", "title": "Team"},
+          {"field": "height", "type": "quantitative", "title": "Height (cm)", "format": ".1f"},
+          {"field": "weight", "type": "quantitative", "title": "Weight (kg)", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 7,
+        "dy": -7,
+        "fontSize": 11,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {"field": "player", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition": {
+            "test": "datum.height >= 215 || datum.weight >= 130",
+            "value": 1
+          },
+          "value": 0
+        }
+      }
+    }
+  ]
+}
