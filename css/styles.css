@@ -1,8 +1,9 @@
 #choropleth_map {
-	top:100px;
-	bottom: 100px; 
-	left: 100px;
-	right: 100px;
-	/* height: 1000px;
-	width: 800px;*/
+	margin: 20px 0;
+	min-height: 600px;
+}
+
+#height_weight_chart {
+	margin: 20px 0;
+	min-height: 600px;
 }

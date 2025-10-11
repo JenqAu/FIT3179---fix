@@ -4,7 +4,7 @@
   "width": 850,
   "height": 550,
   "data": {
-    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/main/data/nba_players_cleaned.csv"
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/nba_players_cleaned.csv"
   },
 
   "params": [
@@ -71,27 +71,6 @@
           {"field": "height", "type": "quantitative", "title": "Height (cm)", "format": ".1f"},
           {"field": "weight", "type": "quantitative", "title": "Weight (kg)", "format": ".1f"}
         ]
-      }
-    },
-    {
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 7,
-        "dy": -7,
-        "fontSize": 11,
-        "fontStyle": "italic"
-      },
-      "encoding": {
-        "text": {"field": "player", "type": "nominal"},
-        "color": {"value": "black"},
-        "opacity": {
-          "condition": {
-            "test": "datum.height >= 215 || datum.weight >= 130",
-            "value": 1
-          },
-          "value": 0
-        }
       }
     }
   ],
