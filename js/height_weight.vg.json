@@ -72,6 +72,46 @@
           {"field": "weight", "type": "quantitative", "title": "Weight (kg)", "format": ".1f"}
         ]
       }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#666"
+      },
+      "encoding": {
+        "text": {"value": "NBA Player Heights & Weights"},
+        "x": {"value": 425},
+        "y": {"value": 30}
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#999",
+        "strokeDash": [5, 5],
+        "opacity": 0.7
+      },
+      "encoding": {
+        "x": {"aggregate": "mean", "field": "weight"},
+        "size": {"value": 2}
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontSize": 10,
+        "color": "#666",
+        "dx": 5
+      },
+      "encoding": {
+        "text": {"value": "Average Weight"},
+        "x": {"aggregate": "mean", "field": "weight"},
+        "y": {"value": 520}
+      }
     }
   ],
 
