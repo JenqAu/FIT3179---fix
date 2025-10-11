@@ -4,7 +4,7 @@
   "width": 850,
   "height": 550,
   "data": {
-    "url": "data/nba_players_cleaned.csv"
+    "url": "https://github.com/JenqAu/FIT3179/blob/main/data/nba_players_cleaned.csv"
   },
 
   "params": [
