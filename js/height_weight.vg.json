@@ -1,10 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "NBA Player Height vs Weight (Interactive by Team)",
+  "title": "NBA Player Height vs Weight by Position (Interactive by Team)",
   "width": 850,
   "height": 550,
   "data": {
-    "url": "https://github.com/JenqAu/FIT3179/blob/main/data/nba_players_cleaned.csv"
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/main/data/nba_players_cleaned.csv"
   },
 
   "params": [
@@ -14,69 +14,20 @@
         "input": "select",
         "options": [
           null,
-          "ATL",
-          "BOS",
-          "BKN",
-          "CHA",
-          "CHI",
-          "CLE",
-          "DAL",
-          "DEN",
-          "DET",
-          "GSW",
-          "HOU",
-          "IND",
-          "LAC",
-          "LAL",
-          "MEM",
-          "MIA",
-          "MIL",
-          "MIN",
-          "NOP",
-          "NYK",
-          "OKC",
-          "ORL",
-          "PHI",
-          "PHX",
-          "POR",
-          "SAC",
-          "SAS",
-          "TOR",
-          "UTA",
-          "WAS"
+          "ATL", "BOS", "BKN", "CHA", "CHI", "CLE", "DAL", "DEN", "DET",
+          "GSW", "HOU", "IND", "LAC", "LAL", "MEM", "MIA", "MIL", "MIN",
+          "NOP", "NYK", "OKC", "ORL", "PHI", "PHX", "POR", "SAC", "SAS",
+          "TOR", "UTA", "WAS"
         ],
         "labels": [
           "Show All",
-          "Atlanta Hawks",
-          "Boston Celtics",
-          "Brooklyn Nets",
-          "Charlotte Hornets",
-          "Chicago Bulls",
-          "Cleveland Cavaliers",
-          "Dallas Mavericks",
-          "Denver Nuggets",
-          "Detroit Pistons",
-          "Golden State Warriors",
-          "Houston Rockets",
-          "Indiana Pacers",
-          "LA Clippers",
-          "LA Lakers",
-          "Memphis Grizzlies",
-          "Miami Heat",
-          "Milwaukee Bucks",
-          "Minnesota Timberwolves",
-          "New Orleans Pelicans",
-          "New York Knicks",
-          "Oklahoma City Thunder",
-          "Orlando Magic",
-          "Philadelphia 76ers",
-          "Phoenix Suns",
-          "Portland Trail Blazers",
-          "Sacramento Kings",
-          "San Antonio Spurs",
-          "Toronto Raptors",
-          "Utah Jazz",
-          "Washington Wizards"
+          "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", "Chicago Bulls",
+          "Cleveland Cavaliers", "Dallas Mavericks", "Denver Nuggets", "Detroit Pistons",
+          "Golden State Warriors", "Houston Rockets", "Indiana Pacers", "LA Clippers", "LA Lakers",
+          "Memphis Grizzlies", "Miami Heat", "Milwaukee Bucks", "Minnesota Timberwolves",
+          "New Orleans Pelicans", "New York Knicks", "Oklahoma City Thunder", "Orlando Magic",
+          "Philadelphia 76ers", "Phoenix Suns", "Portland Trail Blazers", "Sacramento Kings",
+          "San Antonio Spurs", "Toronto Raptors", "Utah Jazz", "Washington Wizards"
         ],
         "name": "Filter by Team: "
       }
@@ -90,32 +41,33 @@
     }
   ],
 
-  "encoding": {
-    "x": {
-      "field": "weight",
-      "type": "quantitative",
-      "title": "Weight (kg)"
-    },
-    "y": {
-      "field": "height",
-      "type": "quantitative",
-      "title": "Height (cm)"
-    }
-  },
-
   "layer": [
     {
-      "mark": {"type": "circle", "opacity": 0.7, "size": 80},
+      "mark": {"type": "circle", "opacity": 0.75, "size": 70},
       "encoding": {
+        "x": {
+          "field": "weight",
+          "type": "quantitative",
+          "title": "Weight (kg)"
+        },
+        "y": {
+          "field": "height",
+          "type": "quantitative",
+          "title": "Height (cm)"
+        },
         "color": {
-          "field": "team",
+          "field": "position",
           "type": "nominal",
-          "title": "Team",
-          "scale": {"scheme": "tableau10"}
+          "title": "Position",
+          "scale": {
+            "domain": ["PG", "SG", "SF", "PF", "C"],
+            "range": ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"]
+          }
         },
         "tooltip": [
           {"field": "player", "type": "nominal", "title": "Player"},
           {"field": "team", "type": "nominal", "title": "Team"},
+          {"field": "position", "type": "nominal", "title": "Position"},
           {"field": "height", "type": "quantitative", "title": "Height (cm)", "format": ".1f"},
           {"field": "weight", "type": "quantitative", "title": "Weight (kg)", "format": ".1f"}
         ]
@@ -142,5 +94,10 @@
         }
       }
     }
-  ]
+  ],
+
+  "config": {
+    "legend": {"titleFontSize": 13, "labelFontSize": 12},
+    "axis": {"labelFontSize": 12, "titleFontSize": 13}
+  }
 }
