@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Top 20 NBA Scorers by Career Points",
+  "width": 1000,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/NBA%20Players%20by%20State.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum.PTS > 0"},
+    {
+      "aggregate": [
+        {"op": "sum", "field": "PTS", "as": "total_points"},
+        {"op": "sum", "field": "G", "as": "total_games"},
+        {"op": "max", "field": "Yrs", "as": "years"}
+      ],
+      "groupby": ["Player"]
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "total_points", "order": "descending"}]
+    },
+    {"filter": "datum.rank <= 20"}
+  ],
+  "mark": {
+    "type": "bar",
+    "opacity": 0.8
+  },
+  "encoding": {
+    "x": {
+      "field": "total_points",
+      "type": "quantitative",
+      "title": "Total Career Points",
+      "axis": {"format": ","}
+    },
+    "y": {
+      "field": "Player",
+      "type": "nominal",
+      "title": "Player",
+      "sort": {"field": "total_points", "order": "descending"},
+      "axis": {"labelFontSize": 11}
+    },
+    "color": {
+      "field": "total_points",
+      "type": "quantitative",
+      "title": "Points Scored",
+      "scale": {
+        "scheme": "blues",
+        "domain": [20000, 40000]
+      }
+    },
+    "tooltip": [
+      {"field": "Player", "type": "nominal", "title": "Player"},
+      {"field": "total_points", "type": "quantitative", "title": "Total Points", "format": ","},
+      {"field": "total_games", "type": "quantitative", "title": "Games Played", "format": ","},
+      {"field": "years", "type": "quantitative", "title": "Years in NBA"}
+    ]
+  },
+  "config": {
+    "legend": {"titleFontSize": 13, "labelFontSize": 12},
+    "axis": {"labelFontSize": 12, "titleFontSize": 13}
+  }
+}

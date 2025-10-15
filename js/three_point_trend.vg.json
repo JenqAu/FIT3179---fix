@@ -1,0 +1,90 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "NBA 3-Point Shooting: Volume vs Efficiency Trend",
+    "subtitle": "Scatter plot with regression line showing the relationship between attempts and efficiency"
+  },
+  "width": 900,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/NBA%20Players%20by%20State.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum['3PA'] > 50 && datum['3P%'] > 0"},
+    {"calculate": "datum['3P%'] * 100", "as": "efficiency"}
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.6,
+        "size": 60,
+        "color": "#e6f3ff"
+      },
+      "encoding": {
+        "x": {
+          "field": "3PA",
+          "type": "quantitative",
+          "title": "3-Point Attempts",
+          "scale": {"domain": [50, 4000]}
+        },
+        "y": {
+          "field": "efficiency",
+          "type": "quantitative",
+          "title": "3-Point Efficiency (%)",
+          "scale": {"domain": [5, 45]}
+        },
+        "tooltip": [
+          {"field": "Player", "type": "nominal", "title": "Player"},
+          {"field": "3PA", "type": "quantitative", "title": "Attempts", "format": ".0f"},
+          {"field": "efficiency", "type": "quantitative", "title": "Efficiency %", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "color": "#ff6b6b",
+        "strokeWidth": 3,
+        "opacity": 0.8
+      },
+      "transform": [
+        {"regression": "efficiency", "on": "3PA"}
+      ],
+      "encoding": {
+        "x": {"field": "3PA", "type": "quantitative"},
+        "y": {"field": "efficiency", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#333"
+      },
+      "encoding": {
+        "text": {"value": "Trend: More attempts → Slightly lower efficiency"},
+        "x": {"value": 450},
+        "y": {"value": 50}
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#666",
+        "strokeDash": [5, 5],
+        "opacity": 0.7
+      },
+      "encoding": {
+        "y": {"datum": 35}
+      }
+    }
+  ],
+  "config": {
+    "legend": {"titleFontSize": 13, "labelFontSize": 12},
+    "axis": {"labelFontSize": 12, "titleFontSize": 13}
+  }
+}

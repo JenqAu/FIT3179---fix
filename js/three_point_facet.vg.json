@@ -1,0 +1,68 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "NBA 3-Point Shooting: Position Comparison",
+    "subtitle": "Average efficiency by position across different attempt volume ranges"
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/NBA%20Players%20by%20State.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum['3PA'] > 50 && datum['3P%'] > 0"},
+    {"calculate": "datum['3P%'] * 100", "as": "efficiency"},
+    {
+      "calculate": "datum['3PA'] < 200 ? 'Low (<200)' : datum['3PA'] < 600 ? 'Medium (200-600)' : datum['3PA'] < 1500 ? 'High (600-1500)' : 'Elite (1500+)'",
+      "as": "volume_range"
+    }
+  ],
+  "facet": {
+    "row": {
+      "field": "volume_range",
+      "type": "nominal",
+      "title": "Attempt Volume Range",
+      "sort": ["Low (<200)", "Medium (200-600)", "High (600-1500)", "Elite (1500+)"]
+    }
+  },
+  "spec": {
+    "width": 1000,
+    "height": 150,
+    "mark": {
+      "type": "bar",
+      "opacity": 0.8
+    },
+    "encoding": {
+      "x": {
+        "field": "efficiency",
+        "type": "quantitative",
+        "aggregate": "mean",
+        "title": "Average 3-Point Efficiency (%)",
+        "scale": {"domain": [25, 40]}
+      },
+      "y": {
+        "field": "volume_range",
+        "type": "nominal",
+        "title": null,
+        "axis": {"labels": false}
+      },
+      "color": {
+        "field": "volume_range",
+        "type": "nominal",
+        "title": "Volume Range",
+        "scale": {
+          "range": ["#ff9999", "#99ccff", "#99ff99", "#ffcc99"]
+        },
+        "legend": null
+      },
+      "tooltip": [
+        {"field": "volume_range", "title": "Volume Range"},
+        {"field": "efficiency", "aggregate": "mean", "title": "Avg Efficiency", "format": ".1f"},
+        {"aggregate": "count", "title": "Number of Players"}
+      ]
+    }
+  },
+  "config": {
+    "legend": {"titleFontSize": 13, "labelFontSize": 12},
+    "axis": {"labelFontSize": 12, "titleFontSize": 13}
+  }
+}

@@ -2,31 +2,113 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>NBA Players per 1 Million Residents (by State)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA Player Analytics: Geographic Origins & Performance Insights</title>
+
+  <!-- Professional Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Vega & Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- CSS file (optional, for layout) -->
+  <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
 </head>
 <body>
+    <div class="dashboard-header">
+      <div class="container">
+        <h1 class="nba-accent">NBA Player Analytics: Geographic Origins & Performance Insights</h1>
+        <p>Explore the fascinating world of NBA talent through comprehensive data analysis. Discover where basketball stars come from, how their physical attributes correlate with success, and what separates elite shooters from the rest of the league.</p>
+      </div>
+      <div class="court-lines"></div>
+    </div>  <div class="container">
+    <div class="charts-grid">
+      <!-- Choropleth Map - Full Width -->
+      <section class="chart-section full-width">
+        <h2>🏀 NBA Player Geographic Distribution</h2>
+        <p>Interactive choropleth map showing the birth states of NBA players, with darker colors indicating higher concentrations of professional basketball talent.</p>
+        <div class="chart-container">
+          <div id="choropleth_map"></div>
+        </div>
+        <p class="chart-annotation">California leads with the highest number of NBA players, followed by New York and Texas. Southern states show strong representation, while some Midwestern states have fewer players despite large populations.</p>
+      </section>
 
-  <h1>NBA Players per 1 Million Residents (by State)</h1>
-  <p>This map shows the number of NBA players produced per 1 million residents in each U.S. state, normalized by 2024 Census estimates.</p>
+      <!-- Sunburst Chart -->
+      <section class="chart-section">
+        <h2>📊 3-Point Shooting: Hierarchical Analysis</h2>
+        <p>Sunburst visualization categorizing players by shooting efficiency tiers and attempt volume, revealing patterns in elite vs. developing shooters.</p>
+        <div class="chart-container">
+          <div id="three_point_sunburst"></div>
+        </div>
+        <p class="chart-annotation">Most players fall into the "Developing" category with moderate efficiency, while elite shooters above 40% represent rare talent. High-volume shooters often balance opportunity with accuracy.</p>
+      </section>
 
-  <div id="choropleth_map"></div>
+      <!-- Height vs Weight Chart -->
+      <section class="chart-section">
+        <h2>📏 Player Physical Characteristics</h2>
+        <p>Bubble chart exploring the relationship between player height, weight, and performance across different positions in professional basketball.</p>
+        <div class="chart-container">
+          <div id="height_weight_chart"></div>
+        </div>
+        <p class="chart-annotation">Centers are typically the tallest and heaviest players, while guards are smaller and more agile. Bubble size represents career scoring impact, showing that success comes in all sizes.</p>
+      </section>
 
-  <h2>NBA Player Height vs Weight Analysis</h2>
-  <div id="height_weight_chart"></div>
+      <!-- 3-Point Scatter Plot - Full Width -->
+      <section class="chart-section full-width">
+        <h2>🎯 3-Point Shooting Efficiency Analysis</h2>
+        <p>Interactive scatter plot correlating shooting efficiency with attempt volume, where bubble size represents career scoring impact and colors denote geographic origins.</p>
+        <div class="chart-container">
+          <div id="three_point_scatter"></div>
+        </div>
+        <p class="chart-annotation">Players with 35-40% efficiency and moderate attempt volumes often find the best balance. Elite accuracy above 40% is rare, while high-volume shooters show dedication to the three-point game.</p>
+      </section>
+
+      <!-- Top Scorers Bar Chart - Full Width -->
+      <section class="chart-section full-width">
+        <h2>🏆 Career Scoring Leaders</h2>
+        <p>Horizontal bar chart ranking the most prolific scorers in NBA history, with gradient colors reflecting their scoring volume and career impact.</p>
+        <div class="chart-container">
+          <div id="top_scorers_bar"></div>
+        </div>
+        <p class="chart-annotation">LeBron James and Kareem Abdul-Jabbar lead the all-time scoring list with over 40,000 points each. Modern stars like Stephen Curry showcase the 3-point revolution in scoring.</p>
+      </section>
+    </div>
+
+  </div>
 
   <script type="text/javascript">
-    vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', {actions: false}).catch(console.error);
-    vegaEmbed('#height_weight_chart', 'js/height_weight.vg.json', {actions: false}).catch(console.error);
+    // Professional chart embedding with error handling
+    const charts = [
+      { id: '#choropleth_map', spec: 'js/choropleth_map.vg.json' },
+      { id: '#height_weight_chart', spec: 'js/height_weight.vg.json' },
+      { id: '#three_point_sunburst', spec: 'js/three_point_sunburst.vg.json' },
+      { id: '#three_point_scatter', spec: 'js/three_point_scatter.vg.json' },
+      { id: '#top_scorers_bar', spec: 'js/top_scorers_bar.vg.json' }
+    ];
+
+    charts.forEach(chart => {
+      vegaEmbed(chart.id, chart.spec, {
+        actions: false,
+        theme: 'quartz'
+      }).catch(error => {
+        console.error(`Error loading ${chart.spec}:`, error);
+        // Fallback: show error message in chart container
+        const container = document.querySelector(chart.id);
+        if (container) {
+          container.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: center; height: 400px; color: #e53e3e; font-family: 'Inter', sans-serif;">
+              <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                <div style="font-weight: 600; margin-bottom: 0.5rem;">Chart Loading Error</div>
+                <div style="font-size: 0.9rem; color: #718096;">Unable to load visualization data</div>
+              </div>
+            </div>
+          `;
+        }
+      });
+    });
   </script>
-
-
 </body>
 </html>

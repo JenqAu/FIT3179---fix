@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "NBA 3-Point Shooting: Efficiency Heatmap",
+    "subtitle": "2D histogram showing density of players by attempts and efficiency"
+  },
+  "width": 900,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/NBA%20Players%20by%20State.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum['3PA'] > 50 && datum['3P%'] > 0"},
+    {"calculate": "datum['3P%'] * 100", "as": "efficiency"}
+  ],
+  "mark": "rect",
+  "encoding": {
+    "x": {
+      "bin": {"maxbins": 20},
+      "field": "3PA",
+      "type": "quantitative",
+      "title": "3-Point Attempts (binned)",
+      "scale": {"domain": [50, 4000]}
+    },
+    "y": {
+      "bin": {"maxbins": 15},
+      "field": "efficiency",
+      "type": "quantitative",
+      "title": "3-Point Efficiency % (binned)",
+      "scale": {"domain": [5, 45]}
+    },
+    "color": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Player Count",
+      "scale": {
+        "scheme": "viridis",
+        "domain": [1, 50]
+      }
+    },
+    "tooltip": [
+      {"bin": true, "field": "3PA", "title": "Attempts Range"},
+      {"bin": true, "field": "efficiency", "title": "Efficiency Range (%)"},
+      {"aggregate": "count", "title": "Number of Players"}
+    ]
+  },
+  "config": {
+    "legend": {"titleFontSize": 13, "labelFontSize": 12},
+    "axis": {"labelFontSize": 12, "titleFontSize": 13}
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "NBA 3-Point Shooting: Multi-Metric Comparison",
+    "subtitle": "Parallel coordinates showing relationships between attempts, efficiency, and scoring"
+  },
+  "width": 1000,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/NBA%20Players%20by%20State.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum['3PA'] > 200 && datum['3P%'] > 0"},
+    {"calculate": "datum['3P%'] * 100", "as": "efficiency"},
+    {"calculate": "datum['3PA'] * datum['3P%']", "as": "made_3s"},
+    {
+      "window": [{"op": "rank", "as": "rank_attempts"}],
+      "sort": [{"field": "3PA", "order": "descending"}]
+    },
+    {
+      "window": [{"op": "rank", "as": "rank_efficiency"}],
+      "sort": [{"field": "efficiency", "order": "descending"}]
+    },
+    {
+      "window": [{"op": "rank", "as": "rank_made"}],
+      "sort": [{"field": "made_3s", "order": "descending"}]
+    },
+    {"filter": "datum.rank_attempts <= 50 || datum.rank_efficiency <= 50 || datum.rank_made <= 50"}
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2,
+        "opacity": 0.7
+      },
+      "encoding": {
+        "detail": {"field": "Player"},
+        "color": {
+          "field": "rank_attempts",
+          "type": "quantitative",
+          "scale": {"scheme": "viridis"},
+          "legend": {"title": "Overall Rank"}
+        },
+        "x": {"field": "rank_attempts", "type": "quantitative", "axis": {"title": "By Attempts"}},
+        "y": {"field": "rank_efficiency", "type": "quantitative", "axis": {"title": "By Efficiency"}},
+        "tooltip": [
+          {"field": "Player", "title": "Player"},
+          {"field": "rank_attempts", "title": "Attempts Rank"},
+          {"field": "rank_efficiency", "title": "Efficiency Rank"},
+          {"field": "rank_made", "title": "Made 3s Rank"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 100,
+        "opacity": 0.8
+      },
+      "encoding": {
+        "x": {"field": "rank_attempts", "type": "quantitative"},
+        "y": {"field": "rank_efficiency", "type": "quantitative"},
+        "color": {
+          "field": "rank_attempts",
+          "type": "quantitative",
+          "scale": {"scheme": "viridis"}
+        },
+        "tooltip": [
+          {"field": "Player", "title": "Player"},
+          {"field": "3PA", "title": "Attempts", "format": ".0f"},
+          {"field": "efficiency", "title": "Efficiency %", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "dy": -5,
+        "fontSize": 9,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "text": {"field": "Player"},
+        "x": {"field": "rank_attempts", "type": "quantitative"},
+        "y": {"field": "rank_efficiency", "type": "quantitative"},
+        "opacity": {
+          "condition": {
+            "test": "datum.rank_attempts <= 10 || datum.rank_efficiency <= 10",
+            "value": 1
+          },
+          "value": 0
+        }
+      }
+    }
+  ],
+  "config": {
+    "legend": {"titleFontSize": 13, "labelFontSize": 12},
+    "axis": {"labelFontSize": 12, "titleFontSize": 13}
+  }
+}

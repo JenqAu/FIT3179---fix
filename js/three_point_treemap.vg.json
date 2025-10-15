@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "NBA 3-Point Shooting: Hierarchical Treemap",
+    "subtitle": "Players grouped by position, sized by 3-point attempts, colored by efficiency"
+  },
+  "width": 1000,
+  "height": 800,
+  "data": {
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/NBA%20Players%20by%20State.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum['3PA'] > 100 && datum['3P%'] > 0"},
+    {"calculate": "datum['3P%'] * 100", "as": "efficiency"},
+    {
+      "calculate": "datum.efficiency >= 40 ? 'Elite (40%+)' : datum.efficiency >= 37 ? 'Excellent (37-40%)' : datum.efficiency >= 35 ? 'Good (35-37%)' : datum.efficiency >= 32 ? 'Average (32-35%)' : 'Below Average (<32%)'",
+      "as": "efficiency_tier"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "stroke": "#fff",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "size": {
+      "field": "3PA",
+      "type": "quantitative",
+      "title": "3-Point Attempts"
+    },
+    "color": {
+      "field": "efficiency_tier",
+      "type": "nominal",
+      "title": "Efficiency Tier",
+      "scale": {
+        "domain": ["Elite (40%+)", "Excellent (37-40%)", "Good (35-37%)", "Average (32-35%)", "Below Average (<32%)"],
+        "range": ["#2E8B57", "#32CD32", "#FFD700", "#FFA500", "#DC143C"]
+      }
+    },
+    "tooltip": [
+      {"field": "Player", "title": "Player"},
+      {"field": "3PA", "title": "3-Point Attempts", "format": ".0f"},
+      {"field": "efficiency", "title": "Efficiency %", "format": ".1f"},
+      {"field": "efficiency_tier", "title": "Efficiency Tier"},
+      {"field": "PTS", "title": "Total Points", "format": ","}
+    ]
+  },
+  "config": {
+    "legend": {"titleFontSize": 13, "labelFontSize": 12}
+  }
+}

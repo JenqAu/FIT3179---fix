@@ -1,0 +1,56 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "NBA 3-Point Shooting: Polar Position Analysis",
+    "subtitle": "Radial visualization showing efficiency and volume by player position"
+  },
+  "width": 800,
+  "height": 800,
+  "data": {
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179/refs/heads/main/data/NBA%20Players%20by%20State.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {"filter": "datum['3PA'] > 50 && datum['3P%'] > 0"},
+    {"calculate": "datum['3P%'] * 100", "as": "efficiency"},
+    {
+      "aggregate": [
+        {"op": "mean", "field": "efficiency", "as": "avg_efficiency"},
+        {"op": "mean", "field": "3PA", "as": "avg_attempts"},
+        {"op": "count", "as": "player_count"}
+      ],
+      "groupby": ["State"]
+    },
+    {"filter": "datum.player_count >= 3"}
+  ],
+  "mark": {
+    "type": "arc",
+    "innerRadius": 50
+  },
+  "encoding": {
+    "theta": {
+      "field": "avg_efficiency",
+      "type": "quantitative",
+      "scale": {"domain": [25, 40]}
+    },
+    "radius": {
+      "field": "avg_attempts",
+      "type": "quantitative",
+      "scale": {"domain": [0, 2000], "range": [50, 250]}
+    },
+    "color": {
+      "field": "State",
+      "type": "nominal",
+      "scale": {"scheme": "category20"}
+    },
+    "tooltip": [
+      {"field": "State", "title": "State"},
+      {"field": "avg_efficiency", "title": "Avg 3P%", "format": ".1f"},
+      {"field": "avg_attempts", "title": "Avg Attempts", "format": ".0f"},
+      {"field": "player_count", "title": "Players"}
+    ]
+  },
+  "config": {
+    "legend": {"titleFontSize": 13, "labelFontSize": 12}
+  }
+}
