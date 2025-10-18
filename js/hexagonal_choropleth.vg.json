@@ -4,7 +4,7 @@
   "width": 800,
   "height": 600,
   "data": {
-    "url": "https://github.com/JenqAu/FIT3179/blob/main/data/birthplace/hex_bins.geojson",
+    "url": "../data/birthplace/hex_bins.geojson",
     "format": {"type": "json", "property": "features"}
   },
   "projection": {
