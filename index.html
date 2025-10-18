@@ -19,12 +19,12 @@
 
   <div id="choropleth_map"></div>
 
-  <h2>NBA Player Height vs Weight Analysis</h2>
-  <div id="height_weight_chart"></div>
-
-  <script type="text/javascript">
-    vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', {actions: false}).catch(console.error);
-    vegaEmbed('#height_weight_chart', 'js/height_weight.vg.json', {actions: false}).catch(console.error);
+  <script type="module">
+    try {
+      await vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', {actions: false});
+    } catch (error) {
+      console.error(error);
+    }
   </script>
 
 
