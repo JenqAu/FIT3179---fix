@@ -19,12 +19,14 @@
 
   <div id="choropleth_map"></div>
 
-  <h2>NBA Player Height vs Weight Analysis</h2>
-  <div id="height_weight_chart"></div>
+  <h2>NBA Player Birth Locations - Hexagonal Density Choropleth</h2>
+  <p>This hexagonal choropleth map shows NBA player birth locations using H3 hexagonal binning. Each hexagon represents a geographic area, with color intensity indicating the concentration of NBA talent origins.</p>
+
+  <div id="hexagonal_map"></div>
 
   <script type="text/javascript">
     vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', {actions: false}).catch(console.error);
-    vegaEmbed('#height_weight_chart', 'js/height_weight.vg.json', {actions: false}).catch(console.error);
+    vegaEmbed('#hexagonal_map', 'js/hexagonal_choropleth.vg.json', {actions: false}).catch(console.error);
   </script>
 
 
