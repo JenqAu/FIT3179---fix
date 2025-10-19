@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Basic shot scatter: LOC_X vs LOC_Y.",
+  "description": "2D binned heatmap (KDE-like) of shots with court background.",
   "width": 700,
   "height": 658,
   "background": "#ffffff",
@@ -16,7 +16,7 @@
   "layer": [
     {
       "data": {"values": [{"img": "../data/court.png", "x": -250, "x2": 250, "y": -47.5, "y2": 422.5}]},
-      "mark": {"type": "image", "opacity": 0.45},
+      "mark": {"type": "image", "opacity": 0.4},
       "encoding": {
         "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-250, 250]}, "axis": null},
         "x2": {"field": "x2"},
@@ -26,14 +26,30 @@
       }
     },
     {
-      "mark": {"type": "point", "opacity": 0.75, "size": 50, "filled": true, "color": "#3b82f6"},
+      "mark": {"type": "rect", "opacity": 0.9},
       "encoding": {
-        "x": {"field": "LOC_X", "type": "quantitative", "scale": {"domain": [-250, 250]}, "axis": null},
-        "y": {"field": "LOC_Y", "type": "quantitative", "scale": {"domain": [-47.5, 422.5]}, "axis": null},
+        "x": {
+          "bin": {"step": 10},
+          "field": "LOC_X",
+          "type": "quantitative",
+          "scale": {"domain": [-250, 250]},
+          "axis": null
+        },
+        "y": {
+          "bin": {"step": 10},
+          "field": "LOC_Y",
+          "type": "quantitative",
+          "scale": {"domain": [-47.5, 422.5]},
+          "axis": null
+        },
+        "color": {
+          "aggregate": "count",
+          "type": "quantitative",
+          "scale": {"scheme": "viridis"},
+          "legend": {"title": "Shot density"}
+        },
         "tooltip": [
-          {"field": "PLAYER_NAME", "title": "Player"},
-          {"field": "SHOT_TYPE", "title": "Type"},
-          {"field": "SHOT_DISTANCE", "title": "Distance (ft)"}
+          {"aggregate": "count", "type": "quantitative", "title": "Shots"}
         ]
       }
     }

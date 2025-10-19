@@ -104,8 +104,8 @@
       const radarResult = await vegaEmbed('#radar_chart', 'js/top_players_radar.vg.json', { actions: false });
       const radarView = radarResult.view;
 
-      // Load a minimal scatter shot chart (LOC_X vs LOC_Y)
-      await vegaEmbed('#shot_chart', 'js/shot_scatter_basic.vg.json', { actions: false });
+  // Load a jointplot-style scatter with court background (MJ 1996-97)
+  await vegaEmbed('#shot_chart', 'js/shot_scatter_joint.vg.json', { actions: false });
 
       // --- Dropdown setup ---
       const playerSelect = document.getElementById('player-select');
