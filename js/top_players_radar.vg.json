@@ -1,0 +1,187 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Interactive radar chart comparing NBA legends (2P, 3P, AST, TRB, BLK, STL).",
+  "background": "#f7f9fc",
+  "width": 480,
+  "height": 480,
+  "padding": 50,
+  "autosize": {"type": "none", "contains": "padding"},
+
+  "signals": [
+    {"name": "radius", "update": "width / 2"},
+    {"name": "PI", "value": 3.141592653589793},
+    {
+      "name": "selectedPlayers",
+      "value": ["ALL"]
+    }
+  ],
+
+  "data": [
+    {
+      "name": "table",
+      "url": "../data/top20_players_radar_normalized.csv",
+      "format": {"type": "csv"},
+      "transform": [
+        {
+          "type": "formula",
+          "as": "CleanName",
+          "expr": "replace(datum.Player,'*','')"
+        },
+        {
+          "type": "filter",
+          "expr": "indexof(selectedPlayers, 'ALL') >= 0 || indexof(selectedPlayers, datum.CleanName) >= 0"
+        }
+      ]
+    },
+    {
+      "name": "radialTicks",
+      "values": [
+        {"value": 0.2},
+        {"value": 0.4},
+        {"value": 0.6},
+        {"value": 0.8},
+        {"value": 1.0}
+      ]
+    },
+    {
+      "name": "keys",
+      "source": "table",
+      "transform": [{"type": "aggregate", "groupby": ["Attribute"]}]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "angular",
+      "type": "point",
+      "range": {"signal": "[-PI, PI]"},
+      "padding": 0.5,
+      "domain": {"data": "table", "field": "Attribute"}
+    },
+    {
+      "name": "radial",
+      "type": "linear",
+      "range": {"signal": "[0, radius-40]"},
+      "zero": true,
+      "nice": false,
+      "domain": [0, 1]
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "table", "field": "CleanName"},
+      "range": {"scheme": "tableau10"}
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+      "encode": {"enter": {"x": {"signal": "radius"}, "y": {"signal": "radius"}}},
+      "marks": [
+        {
+          "type": "arc",
+          "from": {"data": "radialTicks"},
+          "encode": {
+            "enter": {
+              "x": {"value": 0},
+              "y": {"value": 0},
+              "startAngle": {"value": 0},
+              "endAngle": {"signal": "2 * PI"},
+              "innerRadius": {"signal": "scale('radial', datum.value)"},
+              "outerRadius": {"signal": "scale('radial', datum.value)"},
+              "stroke": {"value": "#d1d5db"},
+              "strokeWidth": {"value": 1},
+              "fill": {"value": "transparent"}
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "from": {"data": "keys"},
+          "encode": {
+            "enter": {
+              "x": {"value": 0},
+              "y": {"value": 0},
+              "x2": {"signal": "(radius-40) * cos(scale('angular', datum.Attribute))"},
+              "y2": {"signal": "(radius-40) * sin(scale('angular', datum.Attribute))"},
+              "stroke": {"value": "#cbd5f5"},
+              "strokeWidth": {"value": 1},
+              "strokeDash": {"value": [4, 4]}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {"data": "radialTicks"},
+          "encode": {
+            "enter": {
+              "x": {"value": 0},
+              "y": {"signal": "-scale('radial', datum.value)"},
+              "dy": {"value": -4},
+              "text": {"signal": "format(datum.value, '.1f')"},
+              "align": {"value": "center"},
+              "baseline": {"value": "bottom"},
+              "fontSize": {"value": 11},
+              "fill": {"value": "#6b7280"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {"data": "keys"},
+          "encode": {
+            "enter": {
+              "x": {"signal": "(radius-20) * cos(scale('angular', datum.Attribute))"},
+              "y": {"signal": "(radius-20) * sin(scale('angular', datum.Attribute))"},
+              "text": {"field": "Attribute"},
+              "align": {"value": "center"},
+              "baseline": {"value": "middle"},
+              "fontWeight": {"value": "600"},
+              "fontSize": {"value": 14},
+              "fill": {"value": "#1f2933"}
+            }
+          }
+        },
+        {
+          "type": "group",
+          "from": {"facet": {"data": "table", "name": "facet", "groupby": ["CleanName"]}},
+          "marks": [
+            {
+              "type": "line",
+              "from": {"data": "facet"},
+              "encode": {
+                "enter": {
+                  "interpolate": {"value": "linear-closed"},
+                  "x": {"signal": "scale('radial', datum.Value) * cos(scale('angular', datum.Attribute))"},
+                  "y": {"signal": "scale('radial', datum.Value) * sin(scale('angular', datum.Attribute))"},
+                  "stroke": {"scale": "color", "field": "CleanName"},
+                  "strokeWidth": {"value": 2.5},
+                  "fill": {"scale": "color", "field": "CleanName"},
+                  "fillOpacity": {"value": 0.2}
+                }
+              }
+            },
+            {
+              "type": "symbol",
+              "from": {"data": "facet"},
+              "encode": {
+                "enter": {
+                  "x": {"signal": "scale('radial', datum.Value) * cos(scale('angular', datum.Attribute))"},
+                  "y": {"signal": "scale('radial', datum.Value) * sin(scale('angular', datum.Attribute))"},
+                  "size": {"value": 45},
+                  "fill": {"scale": "color", "field": "CleanName"},
+                  "stroke": {"value": "white"},
+                  "strokeWidth": {"value": 1},
+                  "tooltip": {
+                    "signal": "datum.CleanName + ': ' + datum.Attribute + ' ' + format(datum.Value, '.2f')"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

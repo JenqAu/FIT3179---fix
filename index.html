@@ -19,9 +19,63 @@
 
   <div id="choropleth_map"></div>
 
+  <h2>Top 20 NBA Legends Skill Radar</h2>
+  <p>Select an all-time great to see their per-game averages (2P, 3P, assists, rebounds, steals, blocks) scaled for comparison.</p>
+  <div class="radar-layout">
+    <div class="radar-controls">
+      <label for="player-select">Select players</label>
+    <select id="player-select" multiple size="8"></select>
+    <p class="radar-hint">Hold Ctrl (Windows) or Cmd (Mac) to toggle multiple players. Deselect 'ALL' to focus on specific legends.</p>
+    </div>
+    <div id="radar_chart"></div>
+  </div>
+
   <script type="module">
     try {
       await vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', {actions: false});
+
+      const radarResult = await vegaEmbed('#radar_chart', 'js/top_players_radar.vg.json', {actions: false});
+      const radarView = radarResult.view;
+
+      const playerSelect = document.getElementById('player-select');
+      const playerNames = [
+        'ALL',
+        'Bill Russell','Charles Barkley','Eddie Johnson','Elvin Hayes','Hakeem Olajuwon',
+        'Jason Kidd','John Stockton','Kareem Abdul-Jabbar','Karl Malone','Kevin Garnett',
+        'Kobe Bryant','LeBron James','Michael Jordan','Moses Malone','Patrick Ewing',
+        'Robert Parish','Shaquille O\'Neal','Tim Duncan','Walt Bellamy','Wilt Chamberlain'
+      ];
+
+      for (const name of playerNames) {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        option.selected = name === 'ALL';
+        playerSelect.appendChild(option);
+      }
+
+      const updateSelection = () => {
+        const selected = Array.from(playerSelect.selectedOptions).map((opt) => opt.value);
+        if (selected.length === 0) {
+          playerSelect.options[0].selected = true;
+          radarView.signal('selectedPlayers', ['ALL']).runAsync();
+          return;
+        }
+
+        if (selected.includes('ALL')) {
+          for (const opt of playerSelect.options) {
+            opt.selected = opt.value === 'ALL';
+          }
+          radarView.signal('selectedPlayers', ['ALL']).runAsync();
+          return;
+        }
+
+        const cleanSelection = selected.filter((name) => name !== 'ALL');
+        radarView.signal('selectedPlayers', cleanSelection).runAsync();
+      };
+
+      playerSelect.addEventListener('change', updateSelection);
+      radarView.signal('selectedPlayers', ['ALL']).runAsync();
     } catch (error) {
       console.error(error);
     }

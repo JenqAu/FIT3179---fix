@@ -1,9 +1,69 @@
+body {
+	font-family: 'Segoe UI', Arial, sans-serif;
+	margin: 20px auto 60px;
+	max-width: 1100px;
+	line-height: 1.5;
+	color: #1f2933;
+	background-color: #f5f7fb;
+}
+
+h1,
+h2 {
+	color: #0f172a;
+}
+
 #choropleth_map {
 	margin: 20px 0;
 	min-height: 600px;
 }
 
-#height_weight_chart {
-	margin: 20px 0;
-	min-height: 600px;
+.radar-layout {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+	align-items: flex-start;
+	margin-top: 20px;
+}
+
+.radar-controls {
+	flex: 0 0 200px;
+	min-width: 200px;
+	background-color: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 18px 20px;
+	box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.radar-controls label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 12px;
+}
+
+#player-select {
+	width: 100%;
+	min-height: 240px;
+	border-radius: 10px;
+	border: 1px solid #cbd5f5;
+	background-color: #f9fafc;
+	color: #1f2933;
+	font-size: 14px;
+	padding: 8px;
+	box-sizing: border-box;
+}
+
+#player-select option {
+	padding: 6px 4px;
+}
+
+.radar-hint {
+	margin-top: 12px;
+	font-size: 12px;
+	color: #5f6b7d;
+}
+
+#radar_chart {
+	flex: 1;
+	min-width: 320px;
 }
