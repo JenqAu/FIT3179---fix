@@ -91,6 +91,10 @@
 
   <hr class="section-divider">
 
+  <h2>NBA Shot Chart</h2>
+  <p>Shot chart for selected player.</p>
+  <div id="shot_chart"></div>
+
   <script type="module">
     try {
       // Load choropleth
@@ -99,6 +103,9 @@
       // Load radar chart
       const radarResult = await vegaEmbed('#radar_chart', 'js/top_players_radar.vg.json', { actions: false });
       const radarView = radarResult.view;
+
+      // Load a minimal scatter shot chart (LOC_X vs LOC_Y)
+      await vegaEmbed('#shot_chart', 'js/shot_scatter_basic.vg.json', { actions: false });
 
       // --- Dropdown setup ---
       const playerSelect = document.getElementById('player-select');
