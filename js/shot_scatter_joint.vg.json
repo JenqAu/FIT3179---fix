@@ -29,8 +29,8 @@
 
   "vconcat": [
     {
-      "width": 700,
-      "height": 120,
+      "width": 500,
+      "height": 85,
       "data": {"url": "../data/shot_data.csv", "format": {"type": "csv", "parse": {"LOC_X": "number", "LOC_Y": "number"}}},
       "transform": [
         {"filter": "datum.PLAYER_NAME == 'Michael Jordan'"},
@@ -48,8 +48,8 @@
     {
       "hconcat": [
         {
-          "width": 700,
-          "height": 658,
+          "width": 500,
+          "height": 470,
           "layer": [
             {
               "data": {
@@ -98,8 +98,8 @@
         },
 
         {
-          "width": 120,
-          "height": 658,
+          "width": 85,
+          "height": 470,
           "data": {"url": "../data/shot_data.csv", "format": {"type": "csv", "parse": {"LOC_X": "number", "LOC_Y": "number"}}},
           "transform": [
             {"filter": "datum.PLAYER_NAME == 'Michael Jordan'"},

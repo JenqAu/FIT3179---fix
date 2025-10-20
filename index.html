@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>NBA Players Dashboard – FIT3179</title>
+  <title>NBA</title>
 
   <!-- Vega, Vega-Lite & Vega-Embed -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
@@ -14,46 +14,70 @@
 </head>
 
 <body>
-
-  <h1>NBA Players per 1 Million Residents (by State)</h1>
-  <p>This choropleth map shows how many NBA players were born per 1 million residents in each U.S. state, normalized by 2024 population data.</p>
-  <div id="choropleth_map"></div>
-
-  <hr class="section-divider">
-
-  <h2>Top 20 NBA Legends Skill Radar</h2>
-  <p>Select a legend to view their normalized per-game stats (2P, 3P, assists, rebounds, blocks, steals).</p>
-
-  <div class="player-section-grid">
-    <div class="player-card">
-      <img id="photo" alt="Selected player portrait" hidden>
-      <h3 id="player-name">Player</h3>
+  <!-- NBA-style Header -->
+  <header class="nba-topbar">
+    <div class="nba-logo-text">
+      <img src="logo-nba.svg" alt="NBA Logo" class="nba-logo">
     </div>
 
-    <div class="player-stats">
-      <h2>Player Stats</h2>
-      <ul id="stats-list">
-        <li>2P: —</li>
-        <li>3P: —</li>
-        <li>AST: —</li>
-        <li>TRB: —</li>
-        <li>BLK: —</li>
-        <li>STL: —</li>
-      </ul>
+    <div class="project-title">
+      <h1>The NBA Universe: Movement, Mastery & Myth</h1>
+    </div>
+  </header>
+
+<!-- Add this wrapper -->
+  <div class="main-content">
+
+    <section class="scene origins">
+      <div class="scene-header">
+        <h1>Origins of Greatness</h1>
+        <p>From the streets of Chicago to the beaches of LA — discover how birthplace shapes basketball’s geography...</p>
+      </div>
+
+      <div class="map-container">
+        <div id="choropleth_map"></div>
+      </div>
+    </section>
+
+  </div> <!-- end .main-content -->
+
+  <div class="main-content">
+    <hr class="section-divider">
+
+    <h2>Top 20 NBA Legends Skill Radar</h2>
+    <p>Select a legend to view their normalized per-game stats (2P, 3P, assists, rebounds, blocks, steals).</p>
+
+    <div class="player-section-grid">
+      <div class="player-card">
+        <img id="photo" alt="Selected player portrait" hidden>
+        <h3 id="player-name">Player</h3>
+      </div>
+
+      <div class="player-stats">
+        <h2>Player Stats</h2>
+        <ul id="stats-list">
+          <li>2P: —</li>
+          <li>3P: —</li>
+          <li>AST: —</li>
+          <li>TRB: —</li>
+          <li>BLK: —</li>
+          <li>STL: —</li>
+        </ul>
+      </div>
+
+      <div class="selector-panel">
+        <label for="player-select"><strong>Select Players</strong></label>
+        <select id="player-select" multiple size="10"></select>
+        <p class="selector-hint">Hold Ctrl (Windows) or Cmd (Mac) to toggle multiple players.</p>
+      </div>
+
+      <div class="radar-panel">
+        <div id="radar_chart"></div>
+      </div>
     </div>
 
-    <div class="radar-panel">
-      <div id="radar_chart"></div>
-    </div>
-
-    <div class="selector-panel">
-      <label for="player-select"><strong>Select Players</strong></label>
-      <select id="player-select" multiple size="10"></select>
-      <p class="selector-hint">Hold Ctrl (Windows) or Cmd (Mac) to toggle multiple players.</p>
-    </div>
-  </div>
-
-  <hr class="section-divider">
+    <hr class="section-divider">
+  </div> <!-- end .main-content -->
 
   <h2>NBA Shot Chart</h2>
   <p>Shot chart for selected player.</p>

@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Interactive radar chart comparing NBA legends (2P, 3P, AST, TRB, BLK, STL).",
   "background": "#f7f9fc",
-  "width": 420,
-  "height": 420,
+  "width": 380,
+  "height": 380,
   "padding": 45,
   "autosize": {"type": "none", "contains": "padding"},
 

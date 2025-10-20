@@ -6,10 +6,10 @@
   "params": [
     {
       "name": "selectedEra",
-      "value": "All",
+      "value": "60s-80s",
       "bind": {
         "input": "select",
-        "options": ["All", "60s-80s", "80s-00s", "90s", "00s-10s", "10s"],
+        "options": ["60s-80s", "80s-00s", "90s", "00s-10s", "10s"],
         "name": "Dynasty Era: "
       }
     }
@@ -22,7 +22,7 @@
     {"flatten": ["ring_sequence"], "as": ["ring_index"]},
     {"calculate": "floor(datum.ring_index / 5)", "as": "row"},
     {"calculate": "datum.ring_index % 5", "as": "col"},
-    {"filter": "selectedEra == 'All' || datum.PeakEra == selectedEra"}
+    {"filter": "datum.PeakEra == selectedEra"}
   ],
 
   "facet": {
