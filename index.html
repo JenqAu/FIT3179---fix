@@ -11,42 +11,6 @@
 
   <!-- Styling -->
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-    body {
-      font-family: "Inter", sans-serif;
-      margin: 40px;
-      background: #f8fafc;
-      color: #111827;
-    }
-    h1, h2 { color: #111827; }
-    p { color: #4b5563; }
-    #player-section {
-      display: flex;
-      align-items: flex-start;
-      gap: 2rem;
-      background: #f7f9fc;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-    #player-photo img {
-      border-radius: 12px;
-      width: 180px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-    #player-summary ul {
-      list-style: none;
-      padding: 0;
-      line-height: 1.6;
-      margin: 0;
-    }
-    #radar-container select {
-      width: 100%;
-      padding: 5px;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-  </style>
 </head>
 
 <body>
@@ -55,7 +19,7 @@
   <p>This choropleth map shows how many NBA players were born per 1 million residents in each U.S. state, normalized by 2024 population data.</p>
   <div id="choropleth_map"></div>
 
-  <hr style="margin: 40px 0; border: none; border-top: 1px solid #e5e7eb;">
+  <hr class="section-divider">
 
   <h2>Top 20 NBA Legends Skill Radar</h2>
   <p>Select a legend to view their normalized per-game stats (2P, 3P, assists, rebounds, blocks, steals).</p>

@@ -95,17 +95,22 @@
 	border-top: 1px solid #e5e7eb;
 }
 body {
-	font-family: 'Segoe UI', Arial, sans-serif;
-	margin: 20px auto 60px;
-	max-width: 1180px;
+	font-family: "Inter", sans-serif;
+	margin: 40px;
+	background: #f8fafc;
+	color: #111827;
 	line-height: 1.5;
-	color: #1f2933;
-	background-color: #f5f7fb;
+	max-width: 1180px;
+	margin: 20px auto 60px;
 }
 
 h1,
 h2 {
-	color: #0f172a;
+	color: #111827;
+}
+
+p {
+	color: #4b5563;
 }
 
 #choropleth_map {
