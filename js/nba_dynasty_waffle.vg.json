@@ -17,6 +17,7 @@
 
   "transform": [
     {"calculate": "toNumber(datum.Championships)", "as": "rings"},
+    {"filter": "datum.Championships > 1"},
     {"calculate": "sequence(0, 20)", "as": "ring_sequence"},
     {"flatten": ["ring_sequence"], "as": ["ring_index"]},
     {"calculate": "floor(datum.ring_index / 5)", "as": "row"},
@@ -66,7 +67,7 @@
 
   "title": {
     "text": "🏆 Legacy & Dynasty: NBA Championships by Team",
-    "subtitle": "Each 💍 = one championship ring. Colors show era of dominance.",
+    "subtitle": "Each = one championship ring. Colors show era of dominance.",
     "anchor": "start",
     "fontSize": 20,
     "subtitleFontSize": 13,
