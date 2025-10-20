@@ -1,0 +1,38 @@
+import pandas as pd
+import numpy as np
+
+# Load your scraped file
+df = pd.read_csv("C:\\Users\\User\\OneDrive\\Documents\\Monash\\Year 3\\Sem 1\\FIT3179\\FIT3179---fix\\data\\nba_momentum_story_games.csv")
+
+# --- Step 1: Clean columns ---
+df = df.rename(columns={"Minutes": "Time"})  # ensure consistent naming
+df = df[df["ScoreDiff"].notna()]
+
+# --- Step 2: Round time to intervals (every 0.5 min = 30 seconds) ---
+df["TimeRounded"] = (df["Time"] * 2).round() / 2
+
+# --- Step 3: Compute average score differential per time bucket ---
+# Keep only the *most recent* differential within each interval to show actual game flow
+df_smooth = (
+    df.sort_values("TimeRounded")
+      .groupby(["Game", "TimeRounded"])
+      .agg({"ScoreDiff": "mean"})
+      .reset_index()
+)
+
+# --- Step 4: Identify which team is leading at each time step ---
+df_smooth["LeadingTeam"] = df_smooth["ScoreDiff"].apply(
+    lambda x: "Team A" if x > 0 else ("Team B" if x < 0 else "Tied")
+)
+
+# --- Step 5: Optional smoothing (rolling average for softer flow) ---
+df_smooth["ScoreDiffSmooth"] = (
+    df_smooth.groupby("Game")["ScoreDiff"]
+    .transform(lambda x: x.rolling(window=3, min_periods=1, center=True).mean())
+)
+
+# --- Step 6: Save cleaned output ---
+output_path = "nba_momentum_smoothed.csv"
+df_smooth.to_csv(output_path, index=False)
+print("✅ Saved:", output_path)
+print(df_smooth.head(10))

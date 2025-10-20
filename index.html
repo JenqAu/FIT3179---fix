@@ -101,6 +101,12 @@
   <p>League total 3-point attempts (blue) and average accuracy (red), faceted by decade.</p>
   <div id="threept_decades"></div>
 
+  <hr class="section-divider">
+
+  <h2>Game Momentum Stream</h2>
+  <p>Smoothed streamgraph of score differential over game time for selected matches.</p>
+  <div id="momentum_graph"></div>
+
   <script type="module">
     try {
       // Load choropleth
@@ -115,6 +121,9 @@
 
       // Load 3-point decades chart
       await vegaEmbed('#threept_decades', 'js/threept_decades.vg.json', { actions: false });
+
+  // Load momentum streamgraph
+  await vegaEmbed('#momentum_graph', 'js/nba_momentum_stream.vg.json', { actions: false });
 
       // --- Dropdown setup ---
       const playerSelect = document.getElementById('player-select');

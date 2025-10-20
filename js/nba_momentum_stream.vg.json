@@ -1,0 +1,114 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Streamgraph of NBA game momentum showing how the pace and flow evolved across different eras.",
+  "data": {"url": "../data/nba_momentum_smoothed.csv"},
+
+  "transform": [
+    {
+      "aggregate": [{"op": "mean", "field": "ScoreDiffSmooth", "as": "AverageDiff"}],
+      "groupby": ["Game", "TimeRounded", "LeadingTeam"]
+    },
+    {
+      "calculate": "datum.Game == '40500303' ? '2006 Finals — Heat vs Mavericks' : datum.Game == '41500407' ? '2016 Finals — Cavs vs Warriors' : datum.Game == '41900405' ? '2020 Finals — Heat vs Lakers' : datum.Game",
+      "as": "GameLabel"
+    }
+  ],
+
+  "facet": {
+    "field": "GameLabel",
+    "type": "ordinal",
+    "header": {
+      "labelFontSize": 14,
+      "labelFontWeight": "bold",
+      "labelColor": "#111827",
+      "title": null,
+      "labelAlign": "left",
+      "labelPadding": 10
+    }
+  },
+  "columns": 1,
+
+  "spec": {
+    "width": 800,
+    "height": 220,
+    "layer": [
+      {
+        "mark": {"type": "area", "interpolate": "basis", "opacity": 0.85},
+        "encoding": {
+          "x": {
+            "field": "TimeRounded",
+            "type": "quantitative",
+            "axis": {
+              "title": "Game Time (minutes)",
+              "tickCount": 8,
+              "grid": false,
+              "labelFontSize": 11
+            }
+          },
+          "y": {
+            "aggregate": "sum",
+            "field": "AverageDiff",
+            "type": "quantitative",
+            "stack": "center",
+            "axis": {"title": null, "grid": false}
+          },
+          "color": {
+            "field": "LeadingTeam",
+            "type": "nominal",
+            "scale": {
+              "domain": ["Team A", "Team B", "Tied"],
+              "range": ["#2563eb", "#ef4444", "#9ca3af"]
+            },
+            "legend": {"title": "Leading Team", "orient": "right"}
+          },
+          "tooltip": [
+            {"field": "GameLabel", "title": "Matchup"},
+            {"field": "TimeRounded", "title": "Minute"},
+            {"field": "LeadingTeam", "title": "Leader"},
+            {"field": "AverageDiff", "title": "Avg Score Diff"}
+          ]
+        }
+      },
+      {
+        "mark": {
+          "type": "text",
+          "align": "right",
+          "dx": -6,
+          "dy": -6,
+          "fontSize": 10,
+          "fontStyle": "italic",
+          "color": "#374151"
+        },
+        "transform": [
+          {"aggregate": [{"op": "max", "field": "TimeRounded", "as": "xmax"}], "groupby": ["Game"] }
+        ],
+        "encoding": {
+          "x": {"field": "xmax", "type": "quantitative"},
+          "y": {"value": 0},
+          "text": {"value": "Final Buzzer →"}
+        }
+      }
+    ]
+  },
+
+  "title": {
+    "text": "🏀 The Momentum of Matches: How Game Flow Evolved Across Eras",
+    "subtitle": "From Wade’s 2006 comeback to LeBron’s 2016 miracle and Butler’s 2020 duel — each stream captures the rhythm of basketball’s evolution.",
+    "anchor": "start",
+    "fontSize": 20,
+    "subtitleFontSize": 13,
+    "subtitleColor": "#4b5563",
+    "color": "#111827"
+  },
+
+  "config": {
+    "background": "#f9fafb",
+    "axis": {
+      "labelFontSize": 10,
+      "titleFontSize": 12,
+      "labelColor": "#374151",
+      "titleColor": "#111827"
+    },
+    "view": {"stroke": "transparent"}
+  }
+}

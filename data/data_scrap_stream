@@ -1,0 +1,67 @@
+from nba_api.stats.endpoints import playbyplayv2
+import pandas as pd
+import time
+
+# --------------------------------------------
+# ⚙️ CONFIG: Hand-picked high-drama games
+# --------------------------------------------
+GAME_IDS = [
+    "0040500303",  # 2006 Finals Game 3 (Heat vs Mavericks)
+    "0041500407",  # 2016 Finals Game 7 (Cavs vs Warriors)
+    "0041900405",  # 2020 Finals Game 5 (Heat vs Lakers)
+]
+
+
+output_path = "nba_momentum_story_games.csv"
+
+# --------------------------------------------
+# 🏀 Fetch Play-by-Play for each game
+# --------------------------------------------
+def get_game_momentum(game_id):
+    pbp = playbyplayv2.PlayByPlayV2(game_id=game_id).get_data_frames()[0]
+    pbp = pbp[["GAME_ID", "PERIOD", "PCTIMESTRING", "SCORE", "SCOREMARGIN"]].dropna(subset=["SCOREMARGIN"])
+
+    def parse_margin(x):
+        if isinstance(x, str):
+            if x.strip().upper() == "TIE":
+                return 0
+            try:
+                return int(x)
+            except:
+                return 0
+        return 0
+
+    pbp["ScoreDiff"] = pbp["SCOREMARGIN"].apply(parse_margin)
+
+    # Convert clock to elapsed time
+    pbp["Minutes"] = (
+        pbp["PERIOD"] * 12
+        - pd.to_datetime(pbp["PCTIMESTRING"], format="%M:%S").dt.minute
+        - pd.to_datetime(pbp["PCTIMESTRING"], format="%M:%S").dt.second / 60.0
+    )
+    pbp["Minutes"] = pbp["Minutes"].max() - pbp["Minutes"]  # Flip baseline
+    pbp["LeadingTeam"] = pbp["ScoreDiff"].apply(lambda x: "Team A" if x > 0 else ("Team B" if x < 0 else "Tied"))
+    pbp["Game"] = game_id
+
+    return pbp[["Game", "Minutes", "ScoreDiff", "LeadingTeam"]]
+
+# --------------------------------------------
+# 🚀 MAIN SCRAPE LOOP
+# --------------------------------------------
+frames = []
+for gid in GAME_IDS:
+    try:
+        print(f"Fetching {gid} ...")
+        df = get_game_momentum(gid)
+        frames.append(df)
+        time.sleep(0.6)
+    except Exception as e:
+        print(f"⚠️ Skipped {gid}: {e}")
+
+if frames:
+    df_all = pd.concat(frames, ignore_index=True).sort_values(["Game", "Minutes"])
+    df_all.to_csv(output_path, index=False)
+    print(f"✅ Saved: {output_path}")
+    print(df_all.head(10))
+else:
+    print("No games fetched.")
