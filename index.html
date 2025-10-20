@@ -1,283 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>NBA</title>
+  <meta charset="UTF-8" />
+  <title>NBA Universe: The Court of Legends</title>
 
   <!-- Vega, Vega-Lite & Vega-Embed -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <!-- Styling -->
-  <link rel="stylesheet" href="css/styles.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;   /* centers the 1000px container */
+      overflow-x: hidden;
+    }
+
+    /* --- Main fixed-width container --- */
+    .page-wrapper {
+      width: 1000px;
+      max-width: 1000px;
+      background-color: #0f172a;
+    }
+
+    /* --- Header --- */
+    .nba-topbar {
+      background-color: #000;
+      color: white;
+      border-bottom: 2px solid #FDB927;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nba-logo {
+      height: 48px;
+      margin-right: 14px;
+    }
+
+    .nba-logo-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      color: #FDB927;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    /* --- Scrollytelling Scenes --- */
+    main {
+      width: 100%;
+    }
+
+    .scene {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 20px;
+      transition: background 1s ease, color 0.8s ease;
+      opacity: 0;
+      transform: translateY(60px);
+    }
+
+    .scene.active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 1s ease;
+    }
+
+    .scene-text {
+      max-width: 700px;
+      margin-bottom: 30px;
+    }
+
+    .scene h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .scene p {
+      font-size: 18px;
+      color: #e2e8f0;
+    }
+
+    .vis {
+      width: 100%;
+      max-width: 900px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.3);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* Scene-specific styles */
+    .scene-origins { background: radial-gradient(circle at top, #17408B, #0F172A); color: white; }
+    .scene-radar   { background: linear-gradient(180deg, #0F172A, #1E3A8A); color: #FDB927; }
+    .scene-shot    { background: url('images/woodcourt.jpg') center/cover no-repeat; color: #111827; }
+    .scene-threept { background: linear-gradient(135deg, #0F172A, #C9082A); color: #fff; }
+    .scene-stream  { background: radial-gradient(circle at bottom, #111827, #0F172A); color: #FDB927; }
+    .scene-waffle  { background: #000; color: #FDB927; }
+    .scene-credits { background: #0F172A; color: #fff; }
+
+    .credits {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .credits img {
+      height: 60px;
+      margin-bottom: 10px;
+    }
+
+    .credits h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      margin: 10px 0;
+    }
+
+    .credits p {
+      color: #e5e7eb;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- NBA-style Header -->
-  <header class="nba-topbar">
-    <div class="nba-logo-text">
-      <img src="logo-nba.svg" alt="NBA Logo" class="nba-logo">
-    </div>
-
-    <div class="project-title">
-      <h1>The NBA Universe: Movement, Mastery & Myth</h1>
-    </div>
-  </header>
-
-<!-- Add this wrapper -->
-  <div class="main-content">
-
-    <section class="scene origins">
-      <div class="scene-header">
-        <h1>Origins of Greatness</h1>
-        <p>From the streets of Chicago to the beaches of LA — discover how birthplace shapes basketball’s geography...</p>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="nba-topbar">
+      <img src="logo-nba.svg" alt="NBA Logo" class="nba-logo" />
+      <div class="nba-logo-text">
+        <h1>The NBA Universe: The Court of Legends</h1>
       </div>
+    </header>
 
-      <div class="map-container">
-        <div id="choropleth_map"></div>
-      </div>
-    </section>
+    <!-- Scrollytelling Scenes -->
+    <main>
+      <section class="scene scene-origins">
+        <div class="scene-text">
+          <h1>Origins of Greatness</h1>
+          <p>Where do legends begin? From the streets of Chicago to the beaches of LA — discover how birthplace shaped basketball’s geography.</p>
+        </div>
+        <div class="vis" id="choropleth_map"></div>
+      </section>
 
-  </div> <!-- end .main-content -->
+      <section class="scene scene-radar">
+        <div class="scene-text">
+          <h1>Built Different</h1>
+          <p>Every legend has a unique profile — compare how scoring, rebounding, and defense define greatness.</p>
+        </div>
+        <div class="vis" id="radar_chart"></div>
+      </section>
 
-  <div class="main-content">
-    <hr class="section-divider">
+      <section class="scene scene-shot">
+        <div class="scene-text">
+          <h1>The Art of the Shot</h1>
+          <p>Precision, rhythm, and control — witness Michael Jordan’s 1996–97 shot map masterpiece.</p>
+        </div>
+        <div class="vis" id="shot_chart"></div>
+      </section>
 
-    <h2>Top 20 NBA Legends Skill Radar</h2>
-    <p>Select a legend to view their normalized per-game stats (2P, 3P, assists, rebounds, blocks, steals).</p>
+      <section class="scene scene-threept">
+        <div class="scene-text">
+          <h1>The 3-Point Revolution</h1>
+          <p>From rare trick shots to the modern game’s heartbeat — how the 3-pointer reshaped the league.</p>
+        </div>
+        <div class="vis" id="threept_decades"></div>
+      </section>
 
-    <div class="player-section-grid">
-      <div class="player-card">
-        <img id="photo" alt="Selected player portrait" hidden>
-        <h3 id="player-name">Player</h3>
-      </div>
+      <section class="scene scene-stream">
+        <div class="scene-text">
+          <h1>Momentum and Madness</h1>
+          <p>The pulse of history — comeback arcs from the most electrifying Finals of the 21st century.</p>
+        </div>
+        <div class="vis" id="momentum_graph"></div>
+      </section>
 
-      <div class="player-stats">
-        <h2>Player Stats</h2>
-        <ul id="stats-list">
-          <li>2P: —</li>
-          <li>3P: —</li>
-          <li>AST: —</li>
-          <li>TRB: —</li>
-          <li>BLK: —</li>
-          <li>STL: —</li>
-        </ul>
-      </div>
+      <section class="scene scene-waffle">
+        <div class="scene-text">
+          <h1>Dynasties Never Die</h1>
+          <p>Legacy immortalized in gold — each trophy a ring of glory in the pantheon of champions.</p>
+        </div>
+        <div class="vis" id="dynasty_waffle"></div>
+      </section>
 
-      <div class="selector-panel">
-        <label for="player-select"><strong>Select Players</strong></label>
-        <select id="player-select" multiple size="10"></select>
-        <p class="selector-hint">Hold Ctrl (Windows) or Cmd (Mac) to toggle multiple players.</p>
-      </div>
+      <footer class="scene scene-credits">
+        <div class="credits">
+          <img src="logo-nba.svg" alt="NBA Logo" />
+          <h2>Thanks for visiting the Court of Legends</h2>
+          <p>Created by Au Jenq for FIT3179 — Data Visualization</p>
+        </div>
+      </footer>
+    </main>
+  </div>
 
-      <div class="radar-panel">
-        <div id="radar_chart"></div>
-      </div>
-    </div>
-
-    <hr class="section-divider">
-  </div> <!-- end .main-content -->
-
-  <h2>NBA Shot Chart</h2>
-  <p>Shot chart for selected player.</p>
-  <div id="shot_chart"></div>
-
-  <hr class="section-divider">
-
-  <h2>3-Point Revolution by Decade</h2>
-  <p>League total 3-point attempts (blue) and average accuracy (red), faceted by decade.</p>
-  <div id="threept_decades"></div>
-
-  <hr class="section-divider">
-
-  <h2>Game Momentum Stream</h2>
-  <p>Smoothed streamgraph of score differential over game time for selected matches.</p>
-  <div id="momentum_graph"></div>
-
-  <hr class="section-divider">
-
-  <h2>NBA Dynasty Waffle Chart</h2>
-  <p>Waffle chart showing championship wins by team dynasty.</p>
-  <div id="dynasty_waffle"></div>
-
+  <!-- Vega Embeds -->
   <script type="module">
     try {
-      // Load choropleth
       await vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', { actions: false });
-
-      // Load radar chart
-      const radarResult = await vegaEmbed('#radar_chart', 'js/top_players_radar.vg.json', { actions: false });
-      const radarView = radarResult.view;
-
-  // Load a jointplot-style scatter with court background (MJ 1996-97)
-  await vegaEmbed('#shot_chart', 'js/shot_scatter_joint.vg.json', { actions: false });
-
-      // Load 3-point decades chart
+      await vegaEmbed('#radar_chart', 'js/top_players_radar.vg.json', { actions: false });
+      await vegaEmbed('#shot_chart', 'js/shot_scatter_joint.vg.json', { actions: false });
       await vegaEmbed('#threept_decades', 'js/threept_decades.vg.json', { actions: false });
-
-  // Load momentum streamgraph
-  await vegaEmbed('#momentum_graph', 'js/nba_momentum_stream.vg.json', { actions: false });
-
-  // Load dynasty waffle chart
-  await vegaEmbed('#dynasty_waffle', 'js/nba_dynasty_waffle.vg.json', { actions: false });
-
-      // --- Dropdown setup ---
-      const playerSelect = document.getElementById('player-select');
-      const playerNameEl = document.getElementById("player-name");
-      const photoEl = document.getElementById("photo");
-      const statsList = document.getElementById("stats-list");
-      const defaultStatsHtml = ["2P","3P","AST","TRB","BLK","STL"].map(attr => `<li>${attr}: —</li>`).join("");
-
-      const resetPlayerCard = () => {
-        playerNameEl.textContent = "Player";
-        photoEl.removeAttribute("src");
-        photoEl.hidden = true;
-        statsList.innerHTML = defaultStatsHtml;
-      };
-
-      resetPlayerCard();
-      const playerNames = [
-        'Bill Russell','Charles Barkley','Eddie Johnson','Elvin Hayes','Hakeem Olajuwon',
-        'Jason Kidd','John Stockton','Kareem Abdul-Jabbar','Karl Malone','Kevin Garnett',
-        'Kobe Bryant','LeBron James','Michael Jordan','Moses Malone','Patrick Ewing',
-        'Robert Parish','Shaquille O\'Neal','Tim Duncan','Walt Bellamy','Wilt Chamberlain'
-      ];
-
-      const playerIDs = {
-        "LeBron James": 2544,
-        "Michael Jordan": 893,
-        "Kobe Bryant": 977,
-        "Tim Duncan": 1495,
-        "Wilt Chamberlain": 76375,
-        "Shaquille O'Neal": 406,
-        "Kareem Abdul-Jabbar": 76003,
-        "Karl Malone": 252,
-        "Kevin Garnett": 708,
-        "Hakeem Olajuwon": 165,
-        "Bill Russell": 78049,
-        "Charles Barkley": 787,
-        "Jason Kidd": 467,
-        "John Stockton": 304,
-        "Patrick Ewing": 121,
-        "Moses Malone": 77449,
-        "Robert Parish": 305,
-        "Elvin Hayes": 76979,
-        "Walt Bellamy": 76144,
-        "Eddie Johnson": 698
-      };
-
-      const getPlayerImage = (name) => {
-        const id = playerIDs[name];
-        return id
-          ? `https://cdn.nba.com/headshots/nba/latest/1040x760/${id}.png`
-          : "images/default.jpg";
-      };
-
-      const statOrder = ["2P","3P","AST","TRB","BLK","STL"];
-      const playerStats = new Map();
-
-      const loadPlayerStats = async () => {
-        const response = await fetch("data/top20_players_radar.csv");
-        const csv = await response.text();
-        const lines = csv.trim().split(/\r?\n/).slice(1);
-        for (const line of lines) {
-          if (!line) continue;
-          const parts = line.split(",");
-          if (parts.length < 3) continue;
-          const player = parts[0].trim().replaceAll("*", "");
-          const metric = parts[1].trim();
-          const rawValue = parts[2].trim();
-          const numeric = Number(rawValue);
-          if (!playerStats.has(player)) {
-            playerStats.set(player, {});
-          }
-          playerStats.get(player)[metric] = Number.isFinite(numeric) ? numeric : rawValue;
-        }
-      };
-
-      await loadPlayerStats();
-
-      for (const name of playerNames) {
-        const option = document.createElement('option');
-        option.value = name;
-        option.textContent = name;
-        option.selected = false;
-        playerSelect.appendChild(option);
-      }
-
-      if (playerSelect.options.length) {
-        playerSelect.options[0].selected = true;
-      }
-
-      const applySelection = (player) => {
-        if (!player) {
-          resetPlayerCard();
-          return;
-        }
-
-        playerNameEl.textContent = player;
-        const imageSrc = getPlayerImage(player);
-        photoEl.src = imageSrc;
-        photoEl.hidden = false;
-
-        const stats = playerStats.get(player) || {};
-        statsList.innerHTML = statOrder
-          .map(attr => {
-            const value = stats[attr];
-            const display = typeof value === "number"
-              ? value.toLocaleString(undefined, { maximumFractionDigits: 2 })
-              : value || "—";
-            return `<li>${attr}: ${display}</li>`;
-          })
-          .join("");
-      };
-
-      const updateSelection = () => {
-        const selected = Array.from(playerSelect.selectedOptions).map(opt => opt.value);
-        let values = selected;
-        if (!values.length && playerSelect.options[0]) {
-          values = [playerSelect.options[0].value];
-        }
-        for (const option of playerSelect.options) {
-          option.selected = values.includes(option.value);
-        }
-        radarView.signal('selectedPlayers', values).runAsync();
-        const lastSelected = values.at(-1) ?? null;
-        applySelection(lastSelected);
-      };
-
-      playerSelect.addEventListener('change', updateSelection);
-      const initialPlayer = playerSelect.options[0] ? playerSelect.options[0].value : null;
-      if (initialPlayer) {
-        radarView.signal('selectedPlayers', [initialPlayer]).runAsync();
-        applySelection(initialPlayer);
-      }
-
-      // --- Listen to player selection signal from Vega ---
-      radarView.addSignalListener("selectedPlayers", (_, value) => {
-        const arr = Array.isArray(value) ? value : [value];
-        if (!arr.length) {
-          resetPlayerCard();
-          return;
-        }
-
-        const lastSelected = arr.at(-1) ?? null;
-        if (!lastSelected) {
-          resetPlayerCard();
-          return;
-        }
-
-        for (const option of playerSelect.options) {
-          option.selected = arr.includes(option.value);
-        }
-        applySelection(lastSelected);
-      });
-
+      await vegaEmbed('#momentum_graph', 'js/nba_momentum_stream.vg.json', { actions: false });
+      await vegaEmbed('#dynasty_waffle', 'js/nba_dynasty_waffle.vg.json', { actions: false });
     } catch (err) {
-      console.error(err);
+      console.error("Error embedding Vega charts:", err);
     }
-  </script>
 
+    // Scroll fade-in
+    const scenes = document.querySelectorAll('.scene');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('active');
+      });
+    }, { threshold: 0.3 });
+
+    scenes.forEach(scene => observer.observe(scene));
+  </script>
 </body>
 </html>
