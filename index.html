@@ -107,6 +107,12 @@
   <p>Smoothed streamgraph of score differential over game time for selected matches.</p>
   <div id="momentum_graph"></div>
 
+  <hr class="section-divider">
+
+  <h2>NBA Dynasty Waffle Chart</h2>
+  <p>Waffle chart showing championship wins by team dynasty.</p>
+  <div id="dynasty_waffle"></div>
+
   <script type="module">
     try {
       // Load choropleth
@@ -124,6 +130,9 @@
 
   // Load momentum streamgraph
   await vegaEmbed('#momentum_graph', 'js/nba_momentum_stream.vg.json', { actions: false });
+
+  // Load dynasty waffle chart
+  await vegaEmbed('#dynasty_waffle', 'js/nba_dynasty_waffle.vg.json', { actions: false });
 
       // --- Dropdown setup ---
       const playerSelect = document.getElementById('player-select');
