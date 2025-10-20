@@ -95,6 +95,12 @@
   <p>Shot chart for selected player.</p>
   <div id="shot_chart"></div>
 
+  <hr class="section-divider">
+
+  <h2>3-Point Revolution by Decade</h2>
+  <p>League total 3-point attempts (blue) and average accuracy (red), faceted by decade.</p>
+  <div id="threept_decades"></div>
+
   <script type="module">
     try {
       // Load choropleth
@@ -106,6 +112,9 @@
 
   // Load a jointplot-style scatter with court background (MJ 1996-97)
   await vegaEmbed('#shot_chart', 'js/shot_scatter_joint.vg.json', { actions: false });
+
+      // Load 3-point decades chart
+      await vegaEmbed('#threept_decades', 'js/threept_decades.vg.json', { actions: false });
 
       // --- Dropdown setup ---
       const playerSelect = document.getElementById('player-select');

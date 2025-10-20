@@ -1,0 +1,52 @@
+from nba_api.stats.endpoints import commonallplayers, commonplayerinfo
+import pandas as pd
+import time
+
+# Define range
+START_YEAR = 1980
+END_YEAR = 2020
+
+all_data = []
+
+# Loop through seasons
+for year in range(START_YEAR, END_YEAR + 1):
+    print(f"Fetching players for season {year}-{str(year+1)[-2:]}...")
+
+    season_str = f"{year}-{str(year+1)[-2:]}"
+    players = commonallplayers.CommonAllPlayers(season=season_str).get_data_frames()[0]
+
+    for _, row in players.iterrows():
+        player_id = row['PERSON_ID']
+        try:
+            info = commonplayerinfo.CommonPlayerInfo(player_id=player_id).get_data_frames()[0]
+            position = info.loc[0, 'POSITION']
+            all_data.append({'Year': year, 'PlayerID': player_id, 'Position': position})
+        except Exception as e:
+            print(f"⚠️ Skipped player {player_id}: {e}")
+            continue
+        
+        # Respect API rate limits
+        time.sleep(0.4)
+
+# Convert to DataFrame
+df = pd.DataFrame(all_data)
+
+# Simplify position labels
+def simplify_pos(pos):
+    if pd.isna(pos): return "Unknown"
+    if "G" in pos: return "Guard"
+    if "F" in pos and "C" not in pos: return "Forward"
+    if "C" in pos: return "Center"
+    return pos
+
+df['Position'] = df['Position'].apply(simplify_pos)
+
+# Group by year and position
+df_summary = df.groupby(['Year', 'Position']).size().reset_index(name='Count')
+
+# Save to CSV
+output_path = "nba_positions_over_time.csv"
+df_summary.to_csv(output_path, index=False)
+
+print("✅ Saved:", output_path)
+print(df_summary.head(10))

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Interactive overview + detail of NBA 3-point attempts and accuracy (1980–2021).",
+  "data": {"url": "data/nba_3pt_1980_2021_final.csv"},
+
+  "vconcat": [
+    {
+      "width": 800,
+      "height": 300,
+      "layer": [
+        {
+          "mark": {"type": "area", "color": "#93c5fd", "opacity": 0.3},
+          "encoding": {
+            "x": {
+              "field": "Year",
+              "type": "quantitative",
+              "scale": {"domain": {"param": "brush"}},
+              "axis": {
+                "title": "Season",
+                "tickCount": 10,
+                "labelFontSize": 11,
+                "titleFontSize": 12,
+                "format": "d"
+              }
+            },
+            "y": {
+              "field": "Total_3PA",
+              "type": "quantitative",
+              "axis": {
+                "title": "Total 3-Point Attempts",
+                "labelFontSize": 11,
+                "titleFontSize": 12,
+                "grid": false
+              }
+            },
+            "tooltip": [
+              {"field": "Year", "title": "Season"},
+              {"field": "Total_3PA", "title": "Total Attempts"},
+              {"field": "Avg_3P_Pct", "title": "Average 3P%"}
+            ]
+          }
+        },
+        {
+          "mark": {"type": "line", "strokeWidth": 2, "color": "#2563eb"},
+          "encoding": {
+            "x": {
+              "field": "Year",
+              "type": "quantitative",
+              "scale": {"domain": {"param": "brush"}}
+            },
+            "y": {"field": "Total_3PA", "type": "quantitative", "axis": null},
+            "tooltip": [
+              {"field": "Year", "title": "Season"},
+              {"field": "Total_3PA", "title": "Total Attempts"},
+              {"field": "Avg_3P_Pct", "title": "Average 3P%"}
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "line",
+            "strokeDash": [4, 3],
+            "strokeWidth": 1.5,
+            "color": "#f59e0b"
+          },
+          "encoding": {
+            "x": {
+              "field": "Year",
+              "type": "quantitative",
+              "scale": {"domain": {"param": "brush"}}
+            },
+            "y": {
+              "field": "Avg_3P_Pct",
+              "type": "quantitative",
+              "axis": {
+                "title": "Average 3P%",
+                "orient": "right",
+                "format": ".1%",
+                "labelFontSize": 11,
+                "titleFontSize": 12,
+                "grid": false
+              }
+            },
+            "tooltip": [
+              {"field": "Year", "title": "Season"},
+              {"field": "Total_3PA", "title": "Total Attempts"},
+              {"field": "Avg_3P_Pct", "title": "Average 3P%"}
+            ]
+          }
+        }
+      ],
+      "resolve": {"scale": {"y": "independent"}}
+    },
+
+    {
+      "width": 800,
+      "height": 80,
+      "mark": {"type": "area", "color": "#2563eb"},
+      "params": [
+        {"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}
+      ],
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative",
+          "axis": {"tickCount": 10, "title": "Select Range", "format": "d"},
+          "scale": {"domain": [1980, 2020]}
+        },
+        "y": {
+          "field": "Total_3PA",
+          "type": "quantitative",
+          "axis": {"tickCount": 3, "grid": false, "title": null}
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "axis": {"labelFontSize": 10, "titleFontSize": 12},
+    "view": {"stroke": "transparent"}
+  }
+}
