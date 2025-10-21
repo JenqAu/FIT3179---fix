@@ -208,6 +208,7 @@ body {
   gap: 24px;
   margin-top: 24px;
   align-items: start;
+  justify-items: center;
 }
 
 .shot-card {
@@ -215,6 +216,9 @@ body {
   border-radius: 14px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .shot-card h3 {
@@ -238,5 +242,88 @@ body {
 
   .shot-comparison {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ========== SHOT MAP COMPARISON (Horizontal Alignment) ========== */
+.shot-section {
+  margin-top: 60px;
+}
+
+.shot-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.shot-card {
+  flex: 0 0 48%;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.shot-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+.shot-card h3 {
+  font-size: 18px;
+  color: #111827;
+  margin-bottom: 16px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.shot-map {
+  width: 440px;           /* matches Vega-Lite spec width */
+  height: 484px;          /* 70 top density + 414 main plot */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+
+.shot-caption {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.6;
+  text-align: left;
+  max-width: 440px;
+  align-self: flex-start;
+}
+
+/* Keep both maps perfectly level on desktop */
+@media (max-width: 1100px) {
+  .shot-map {
+    width: 380px;
+    height: 440px;
+  }
+}
+
+@media (max-width: 900px) {
+  .shot-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  .shot-card {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+  .shot-map {
+    width: 100%;
+    height: auto;
   }
 }
