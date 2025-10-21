@@ -3,7 +3,7 @@
   "description": "Choropleth map showing NBA players per 100k residents by U.S. state.",
   "width": 1100,
   "height": 550,
-  "background": "#102a43",
+  "background": "transparent",
 
   "config": {
     "style": { "guide-label": { "fontSize": 12, "font": "Inter" } },
@@ -23,7 +23,7 @@
       "data": { "sphere": true },
       "mark": {
         "type": "geoshape",
-        "fill": "#102a43",
+        "fill": "transparent",
         "stroke": null
       }
     },

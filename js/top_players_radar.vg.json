@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Interactive radar chart comparing NBA legends (2P, 3P, AST, TRB, BLK, STL).",
-  "background": "#f7f9fc",
+  "background": "#0f1f3d",
   "width": 320,
   "height": 320,
   "padding": 0,
@@ -70,7 +70,16 @@
       "name": "color",
       "type": "ordinal",
       "domain": {"data": "table", "field": "CleanName"},
-      "range": {"scheme": "tableau10"}
+      "range": [
+        "#facc15",
+        "#ef233c",
+        "#2563eb",
+        "#14b8a6",
+        "#f97316",
+        "#8b5cf6",
+        "#0ea5e9",
+        "#22d3ee"
+      ]
     }
   ],
 
@@ -90,8 +99,8 @@
               "endAngle": {"signal": "2 * PI"},
               "innerRadius": {"signal": "scale('radial', datum.value)"},
               "outerRadius": {"signal": "scale('radial', datum.value)"},
-              "stroke": {"value": "#d1d5db"},
-              "strokeWidth": {"value": 1},
+              "stroke": {"value": "#1f2d4a"},
+              "strokeWidth": {"value": 1.2},
               "fill": {"value": "transparent"}
             }
           }
@@ -105,9 +114,9 @@
               "y": {"value": 0},
               "x2": {"signal": "(radius-40) * cos(scale('angular', datum.Attribute))"},
               "y2": {"signal": "(radius-40) * sin(scale('angular', datum.Attribute))"},
-              "stroke": {"value": "#cbd5f5"},
-              "strokeWidth": {"value": 1},
-              "strokeDash": {"value": [4, 4]}
+              "stroke": {"value": "rgba(37, 99, 235, 0.45)"},
+              "strokeWidth": {"value": 1.2},
+              "strokeDash": {"value": [4, 6]}
             }
           }
         },
@@ -123,7 +132,7 @@
               "align": {"value": "center"},
               "baseline": {"value": "bottom"},
               "fontSize": {"value": 11},
-              "fill": {"value": "#6b7280"}
+              "fill": {"value": "#9ca3af"}
             }
           }
         },
@@ -139,7 +148,9 @@
               "baseline": {"value": "middle"},
               "fontWeight": {"value": "600"},
               "fontSize": {"value": 14},
-              "fill": {"value": "#1f2933"}
+              "fill": {"value": "#e5f1ff"},
+              "stroke": {"value": "#000"},
+              "strokeWidth": {"value": 0.4}
             }
           }
         },
@@ -156,9 +167,9 @@
                   "x": {"signal": "scale('radial', datum.Value) * cos(scale('angular', datum.Attribute))"},
                   "y": {"signal": "scale('radial', datum.Value) * sin(scale('angular', datum.Attribute))"},
                   "stroke": {"scale": "color", "field": "CleanName"},
-                  "strokeWidth": {"value": 2.5},
+                  "strokeWidth": {"value": 2.4},
                   "fill": {"scale": "color", "field": "CleanName"},
-                  "fillOpacity": {"value": 0.2}
+                  "fillOpacity": {"value": 0.28}
                 }
               }
             },
@@ -169,10 +180,10 @@
                 "enter": {
                   "x": {"signal": "scale('radial', datum.Value) * cos(scale('angular', datum.Attribute))"},
                   "y": {"signal": "scale('radial', datum.Value) * sin(scale('angular', datum.Attribute))"},
-                  "size": {"value": 45},
+                  "size": {"value": 55},
                   "fill": {"scale": "color", "field": "CleanName"},
-                  "stroke": {"value": "white"},
-                  "strokeWidth": {"value": 1},
+                  "stroke": {"value": "#0f172a"},
+                  "strokeWidth": {"value": 1.4},
                   "tooltip": {
                     "signal": "datum.CleanName + ': ' + datum.Attribute + ' ' + format(datum.Value, '.2f')"
                   }
@@ -183,5 +194,25 @@
         }
       ]
     }
-  ]
+  ],
+  "config": {
+  "background": "#0f1f3d",
+    "axis": {
+      "domainColor": "#1f2d4a",
+      "tickColor": "#1f2d4a",
+      "gridColor": "rgba(37, 99, 235, 0.25)",
+      "labelColor": "#9ca3af",
+      "titleColor": "#e5f1ff"
+    },
+    "legend": {
+      "labelColor": "#e5f1ff",
+      "titleColor": "#facc15",
+      "symbolType": "circle",
+      "symbolStrokeColor": "#0f172a",
+      "symbolFillColor": "#2563eb"
+    },
+    "view": {
+      "stroke": "transparent"
+    }
+  }
 }

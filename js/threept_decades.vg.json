@@ -1,6 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Enhanced visual showing the NBA 3-point revolution without Y-axis titles.",
+  "background": "transparent",
   "data": {"url": "data/nba_3pt_1980_2021_final.csv"},
 
   "padding": {"left": 0, "right": 0, "top": 0, "bottom": 0},
@@ -17,10 +18,12 @@
           "scale": {"domain": {"param": "brush"}},
           "axis": {
             "title": "Season",
+            "titleColor": "#ffffff",
             "tickCount": 8,
             "labelFontSize": 11,
             "titleFontSize": 12,
-            "format": "d"
+            "format": "d",
+            "grid": false
           }
         }
       },
@@ -104,7 +107,7 @@
             "dy": 20,
             "baseline": "bottom",
             "fontSize": 12,
-            "fontWeight": "bold",
+            "fontWeight": "normal",
             "color": "#b91c1c",
             "limit": 220,
             "text": "3-Point Revolution Era"
@@ -117,7 +120,7 @@
     {
       "width": "container",
       "height": 70,
-      "mark": {"type": "area", "color": "#a0a0a0"},
+      "mark": {"type": "area", "color": "#81b9fe", "opacity": 0.35},
       "params": [
         {"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}
       ],
@@ -125,7 +128,7 @@
         "x": {
           "field": "Year",
           "type": "quantitative",
-          "axis": {"tickCount": 8, "title": "Select Range", "format": "d"},
+          "axis": {"tickCount": 8, "title": "Select Range", "format": "d", "grid": false, "titleColor": "#ffffff"},
           "scale": {"domain": [1980, 2020]}
         },
         "y": {
@@ -141,7 +144,7 @@
     "axis": {
       "labelFontSize": 10,
       "titleFontSize": 12,
-      "labelColor": "#374151",
+      "labelColor": "#ffffff",
       "titleColor": "#111827"
     },
     "view": {"stroke": "transparent"}

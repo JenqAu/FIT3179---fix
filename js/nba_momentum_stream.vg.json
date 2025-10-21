@@ -1,6 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Streamgraph of NBA Finals momentum — 2016 Cavs vs Warriors",
+  "background": "transparent",
   "data": {"url": "../data/nba_momentum_smoothed.csv"},
 
   "transform": [
@@ -36,7 +37,7 @@
         "type": "text",
         "dy": -6,
         "fontSize": 11,
-  "fontWeight": 600,
+  "fontWeight": "normal",
         "fill": "#6b7280"
       },
       "transform": [
@@ -61,9 +62,11 @@
           "scale": {"domain": [0, 48], "nice": false},
           "axis": {
             "title": "Game Time (minutes)",
+            "titleColor": "#ffffff",
             "tickCount": 8,
             "grid": false,
             "labelFontSize": 11,
+            "labelColor": "#ffffff",
             "values": [0, 12, 24, 36, 48]
           }
         },
@@ -72,7 +75,7 @@
           "field": "AverageDiff",
           "type": "quantitative",
           "stack": "center",
-          "axis": {"title": "Score Difference", "grid": false}
+          "axis": {"title": "Score Difference", "grid": false, "titleColor": "#ffffff" }
         },
         "color": {
           "field": "LeadingTeam",
@@ -121,7 +124,7 @@
     "axis": {
       "labelFontSize": 10,
       "titleFontSize": 12,
-      "labelColor": "#374151",
+      "labelColor": "#ffffff",
       "titleColor": "#111827"
     },
     "view": {"stroke": "transparent"}

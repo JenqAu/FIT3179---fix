@@ -1,8 +1,20 @@
 /* ========== GLOBAL ========== */
+:root {
+  --nba-midnight: #050b19;
+  --nba-navy: #0f1f3d;
+  --nba-royal: #2563eb;
+  --nba-red: #ef233c;
+  --nba-gold: #facc15;
+  --nba-ice: #e5f1ff;
+  --nba-slate: #94a3b8;
+  --card-surface: rgba(15, 31, 61, 0.72);
+  --card-glow: 0 24px 48px rgba(5, 12, 28, 0.62);
+}
+
 body {
   font-family: "Inter", sans-serif;
-  background: #f8fafc;
-  color: #111827;
+  background: linear-gradient(135deg, var(--nba-midnight) 0%, #081a34 45%, #061023 100%);
+  color: var(--nba-ice);
   line-height: 1.5;
   margin: 0;
 }
@@ -13,38 +25,45 @@ body {
   padding: 0 40px;
   display: block;        /* keeps content flow vertical */
   text-align: left;      /* enforces start alignment globally */
+  background: linear-gradient(145deg, rgba(18, 35, 70, 0.92) 0%, rgba(10, 22, 45, 0.82) 100%);
+  border: 1px solid rgba(37, 99, 235, 0.28);
+  border-radius: 22px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
 }
-
 
 .section-divider {
   margin: 40px 0;
   border: none;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 /* ========== HEADER ========== */
 .nba-topbar {
-  background-color: #000;
-  color: white;
-  border-bottom: 2px solid #FDB927;
+  background: linear-gradient(90deg, rgba(15, 31, 61, 0.95) 0%, rgba(37, 99, 235, 0.96) 55%, rgba(239, 35, 60, 0.95) 100%);
+  color: var(--nba-ice);
+  border-bottom: 2px solid var(--nba-gold);
   height: 60px;
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 0 40px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(6, 16, 35, 0.85);
 }
 
 .nba-logo {
   height: 46px;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
 }
 
 .project-title h1 {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 26px;
-  color: #FDB927;
+  font-size: 28px;
+  color: var(--nba-ice);
   margin: 0;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 /* ========== SECTION HEADERS & FOOTERS ========== */
@@ -53,19 +72,28 @@ body {
   margin-bottom: 20px;
   max-width: none;             /* removes centering constraint */
   padding-left: 0;             /* ensures full left alignment */
+  position: relative;
 }
 
 .section-header h2 {
-  color: #111827;
+  color: var(--nba-ice);
   font-size: 24px;
   margin: 0 0 8px 0;
   line-height: 1.3;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 35, 60, 0.45);
+  background: linear-gradient(120deg, rgba(5, 11, 25, 0.9) 0%, rgba(24, 46, 92, 0.65) 100%);
+  box-shadow: 0 10px 24px rgba(8, 20, 45, 0.55);
 }
 
 .section-header p {
   margin-top: 0;
   font-size: 15px;
-  color: #4b5563;
+  color: rgba(229, 241, 255, 0.72);
   line-height: 1.7;
   max-width: none;
   text-align: left;
@@ -77,17 +105,17 @@ body {
   margin-top: 24px;
   max-width: none;
   padding-left: 0;
-  color: #374151;
+  color: rgba(226, 232, 240, 0.7);
   font-size: 15px;
   line-height: 1.8;
 }
 
 .section-footer strong {
-  color: #111827;
+  color: var(--nba-gold);
 }
 
 .section-footer em {
-  color: #1d4ed8;
+  color: var(--nba-royal);
   font-style: italic;
 }
 
@@ -108,9 +136,17 @@ body {
 .player-stats,
 .selector-panel,
 .radar-panel {
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  background: var(--card-surface);
+  border-radius: 16px;
+  box-shadow: none;
+  padding: 18px;
+  border: none;
+}
+
+.selector-panel,
+.radar-panel {
+  background: transparent;
+  border-radius: 0;
   padding: 18px;
 }
 
@@ -122,20 +158,24 @@ body {
   width: 100%;
   border-radius: 10px;
   margin-bottom: 10px;
+  border: 2px solid rgba(250, 204, 21, 0.42);
+  box-shadow: 0 14px 32px rgba(6, 16, 35, 0.55);
 }
 .player-card h3 {
   margin: 0;
   font-size: 18px;
-  color: #111827;
+  color: var(--nba-gold);
   font-weight: 600;
+  letter-spacing: 0.6px;
 }
 
 /* Player Stats */
 .player-stats h2 {
   font-size: 16px;
-  color: #111827;
+  color: var(--nba-ice);
   margin-top: -5px;
   margin-bottom: 5px;
+  letter-spacing: 0.4px;
 }
 .player-stats ul {
   list-style: none;
@@ -143,12 +183,12 @@ body {
   margin: 0;
   font-size: 14px;
   line-height: 1.7;
-  color: #374151;
+  color: rgba(226, 232, 240, 0.78);
 }
 .stat-caption {
   margin-top: 10px;
   font-size: 13px;
-  color: #6b7280;
+  color: rgba(148, 163, 184, 0.78);
   font-style: italic;
 }
 
@@ -158,7 +198,6 @@ body {
   justify-content: flex-start;
   width: 100%;
   flex: 1;
-  background-color: #f9fafb;
   padding: 10px 12px;
   font-size: 14px;
   gap: 7px; /* adds compact, consistent spacing */
@@ -167,7 +206,9 @@ body {
 .selector-panel label {
   margin-bottom: 4px;
   font-weight: 600;
-  color: #111827;
+  color: var(--nba-ice);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 #player-select {
@@ -175,11 +216,16 @@ body {
   padding: 4px;
   font-size: 14px;
   line-height: 1.4;
+  border-radius: 8px;
+  border: none;
+  background: rgba(8, 21, 42, 0.9);
+  color: var(--nba-ice);
+  box-shadow: none;
 }
 
 .selector-hint {
   font-size: 12px;
-  color: #6b7280;
+  color: rgba(148, 163, 184, 0.68);
   margin-top: 4px; /* tighter space to dropdown */
   text-align: left;
   line-height: 1.4;
@@ -253,28 +299,29 @@ body {
 
 .shot-card {
   flex: 0 0 48%;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: none;
+  position: relative;
+  overflow: visible;
 }
 
-.shot-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
-}
+.shot-card:hover { transform: none; }
 
 .shot-card h3 {
   font-size: 18px;
-  color: #111827;
+  color: var(--nba-ice);
   margin-bottom: 16px;
   text-align: center;
   font-weight: 600;
   transform: translateX(-35px);
+  letter-spacing: 1px;
 }
 
 .shot-map {
@@ -285,12 +332,16 @@ body {
   justify-content: center;
   margin-bottom: 12px;
   align-self: flex-start;
+  border-radius: 12px;
+  border: none;
+  background: rgba(4, 10, 24, 0.35);
+  box-shadow: none;
 }
 
 .shot-caption {
   margin-top: 16px;
   font-size: 14px;
-  color: #4b5563;
+  color: rgba(226, 232, 240, 0.75);
   line-height: 1.6;
   text-align: left;
   max-width: 440px;
@@ -343,6 +394,33 @@ body {
   overflow: visible;
 }
 
+.vega-embed {
+  background: linear-gradient(155deg, rgba(9, 20, 40, 0.92) 0%, rgba(12, 31, 63, 0.88) 100%);
+  border-radius: 18px;
+  /* border: 1px solid rgba(37, 99, 235, 0.35); */
+  /* box-shadow: 0 22px 48px rgba(5, 12, 28, 0.65); */
+}
+
+.vega-embed > div {
+  border-radius: inherit;
+}
+
+.radar-panel .vega-embed,
+.radar-panel .vega-embed > div {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.shot-map .vega-embed,
+.shot-map .vega-embed > div {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
 /* ========== DYNASTY WAFFLE SECTION ========== */
 
 
@@ -350,6 +428,7 @@ body {
 .waffle-section {
   margin-top: 60px;
   text-align: left;
+  color: var(--nba-ice);
 }
 
 .waffle-container {
@@ -357,7 +436,11 @@ body {
   margin: 40px 0 20px 0;
   display: block;
   align-items: flex-start;
+  background: transparent; /* same as page background */
+  border: none;
+  box-shadow: none;
 }
+
 
 #dynasty_waffle {
   width: 100%;
@@ -369,7 +452,7 @@ body {
 
 .waffle-section .section-footer{
   margin-top: 24px;
-  color: #374151;
+  color: rgba(229, 241, 255, 0.7);
   font-size: 15px;
   line-height: 1.8;
   max-width: none;
@@ -384,12 +467,12 @@ body {
 }
 
 .waffle-section .section-header p {
-  color: #4b5563;
-  line-height: 1.8;
-  font-size: 15px;
-  max-width: none;
+  color: rgba(229, 241, 255, 0.7);
+     background: none;
+     border-radius: 0;
+     border: none;
+     box-shadow: none;
 }
-
 @media (max-width: 900px) {
   .waffle-container {
     flex-direction: column;
@@ -398,4 +481,40 @@ body {
   #dynasty_waffle {
     max-width: 100%;
   }
+}
+
+
+/* ========== FLATTEN ALL GRAPHS ========== */
+
+/* Make all charts look soft, flat, and integrated with the background */
+.vega-embed,
+.vega-embed > div {
+  background: rgba(8, 18, 38, 0.4) !important; /* subtle glass effect */
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 12px;
+}
+
+/* Optional: Slight transparency for smoother blend */
+.vega-embed svg {
+  opacity: 0.92;
+  mix-blend-mode: lighten; /* helps charts merge into the dark background */
+}
+
+/* Remove extra padding and glow */
+.vega-embed .marks,
+.vega-embed .background {
+  fill: transparent !important;
+}
+
+#choropleth_map,
+#radar_chart,
+#shot_chart_mj,
+#shot_chart_lebron,
+#threept_decades,
+#momentum_graph,
+#dynasty_waffle {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
