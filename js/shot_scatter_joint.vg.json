@@ -56,7 +56,7 @@
             {
               "data": {
                 "values": [
-                  { "x": -250, "x2": 250, "y": -47.5, "y2": 422.5, "img": "https://github.com/JenqAu/FIT3179---fix/blob/backup-main/data/court.png" }
+                  { "x": -250, "x2": 250, "y": -47.5, "y2": 422.5, "img": "https://raw.githubusercontent.com/JenqAu/FIT3179---fix/refs/heads/backup-main/data/court.png" }
                 ]
               },
               "mark": { "type": "image", "opacity": 0.5 },
