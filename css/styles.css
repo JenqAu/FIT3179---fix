@@ -134,8 +134,8 @@ body {
 .player-stats h2 {
   font-size: 16px;
   color: #111827;
-  margin-top: 0;
-  margin-bottom: 10px;
+  margin-top: -5px;
+  margin-bottom: 5px;
 }
 .player-stats ul {
   list-style: none;
@@ -152,25 +152,39 @@ body {
   font-style: italic;
 }
 
-/* Selector Panel */
 .selector-panel {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   flex: 1;
-  /* border-radius: 8px; */
-  /* border: 1px solid #d1d5db; */
   background-color: #f9fafb;
-  padding: 8px;
+  padding: 10px 12px;
   font-size: 14px;
+  gap: 7px; /* adds compact, consistent spacing */
 }
+
+.selector-panel label {
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: #111827;
+}
+
+#player-select {
+  margin: 0; /* removes excess spacing */
+  padding: 4px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
 .selector-hint {
   font-size: 12px;
   color: #6b7280;
-  margin-top: 8px;
+  margin-top: 4px; /* tighter space to dropdown */
   text-align: left;
+  line-height: 1.4;
 }
+
 
 /* Radar Chart */
 .radar-panel {
@@ -179,7 +193,7 @@ body {
   justify-content: center;
   min-height: 320px;
   max-width: 320px;
-  padding: 12px;
+  padding: 1px;
 }
 #radar_chart {
   width: 100%;
