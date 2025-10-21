@@ -1,79 +1,83 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Interactive overview + detail of NBA 3-point attempts and accuracy (1980–2021).",
+  "description": "Enhanced visual showing the NBA 3-point revolution without Y-axis titles.",
   "data": {"url": "data/nba_3pt_1980_2021_final.csv"},
+
+  "padding": {"left": 0, "right": 0, "top": 0, "bottom": 0},
+  "autosize": {"type": "fit-x", "contains": "padding", "resize": true},
 
   "vconcat": [
     {
-      "width": 800,
-      "height": 300,
+      "width": "container",
+      "height": 320,
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative",
+          "scale": {"domain": {"param": "brush"}},
+          "axis": {
+            "title": "Season",
+            "tickCount": 8,
+            "labelFontSize": 11,
+            "titleFontSize": 12,
+            "format": "d"
+          }
+        }
+      },
       "layer": [
         {
-          "mark": {"type": "area", "color": "#93c5fd", "opacity": 0.3},
+          "mark": {"type": "area", "color": "#81b9fe", "opacity": 0.22},
           "encoding": {
-            "x": {
-              "field": "Year",
-              "type": "quantitative",
-              "scale": {"domain": {"param": "brush"}},
-              "axis": {
-                "title": "Season",
-                "tickCount": 10,
-                "labelFontSize": 11,
-                "titleFontSize": 12,
-                "format": "d"
-              }
-            },
             "y": {
               "field": "Total_3PA",
               "type": "quantitative",
               "axis": {
-                "title": "Total 3-Point Attempts",
+                "title": null,
                 "labelFontSize": 11,
                 "titleFontSize": 12,
                 "grid": false
               }
+            }
+          }
+        },
+        {
+          "mark": {"type": "area", "color": "#1d4ed8", "opacity": 0.35},
+          "transform": [{"filter": "datum.Year >= 2012"}],
+          "encoding": {
+            "y": {
+              "field": "Total_3PA",
+              "type": "quantitative",
+              "axis": null
+            }
+          }
+        },
+        {
+          "mark": {"type": "line", "strokeWidth": 3, "color": "#1d4ed8"},
+          "encoding": {
+            "y": {
+              "field": "Total_3PA",
+              "type": "quantitative",
+              "axis": null
+            },
+            "strokeOpacity": {
+              "condition": {"test": "datum.Year < 2012", "value": 0.45},
+              "value": 1
             },
             "tooltip": [
               {"field": "Year", "title": "Season"},
-              {"field": "Total_3PA", "title": "Total Attempts"},
-              {"field": "Avg_3P_Pct", "title": "Average 3P%"}
+              {"field": "Total_3PA", "title": "3PA"},
+              {"field": "Avg_3P_Pct", "title": "Avg 3P%"}
             ]
           }
         },
         {
-          "mark": {"type": "line", "strokeWidth": 2, "color": "#2563eb"},
+          "mark": {"type": "line", "strokeWidth": 2.2, "color": "#f97316"},
           "encoding": {
-            "x": {
-              "field": "Year",
-              "type": "quantitative",
-              "scale": {"domain": {"param": "brush"}}
-            },
-            "y": {"field": "Total_3PA", "type": "quantitative", "axis": null},
-            "tooltip": [
-              {"field": "Year", "title": "Season"},
-              {"field": "Total_3PA", "title": "Total Attempts"},
-              {"field": "Avg_3P_Pct", "title": "Average 3P%"}
-            ]
-          }
-        },
-        {
-          "mark": {
-            "type": "line",
-            "strokeDash": [4, 3],
-            "strokeWidth": 1.5,
-            "color": "#f59e0b"
-          },
-          "encoding": {
-            "x": {
-              "field": "Year",
-              "type": "quantitative",
-              "scale": {"domain": {"param": "brush"}}
-            },
             "y": {
               "field": "Avg_3P_Pct",
               "type": "quantitative",
               "axis": {
-                "title": "Average 3P%",
+                "title": null,
                 "orient": "right",
                 "format": ".1%",
                 "labelFontSize": 11,
@@ -81,21 +85,39 @@
                 "grid": false
               }
             },
-            "tooltip": [
-              {"field": "Year", "title": "Season"},
-              {"field": "Total_3PA", "title": "Total Attempts"},
-              {"field": "Avg_3P_Pct", "title": "Average 3P%"}
-            ]
+            "strokeOpacity": {
+              "condition": {"test": "datum.Year < 2012", "value": 0.55},
+              "value": 1
+            }
           }
+        },
+        {
+          "mark": {"type": "rule", "color": "#ef4444", "strokeDash": [4, 2], "strokeWidth": 1.5},
+          "encoding": {"x": {"datum": 2012}},
+          "transform": [{"filter": "datum.Year == 2012"}]
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 8,
+            "dy": 20,
+            "baseline": "bottom",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "color": "#b91c1c",
+            "limit": 220,
+            "text": "3-Point Revolution Era"
+          },
+          "encoding": {"x": {"datum": 2012}, "y": {"datum": 115000}}
         }
       ],
       "resolve": {"scale": {"y": "independent"}}
     },
-
     {
-      "width": 800,
-      "height": 80,
-      "mark": {"type": "area", "color": "#2563eb"},
+      "width": "container",
+      "height": 70,
+      "mark": {"type": "area", "color": "#a0a0a0"},
       "params": [
         {"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}
       ],
@@ -103,7 +125,7 @@
         "x": {
           "field": "Year",
           "type": "quantitative",
-          "axis": {"tickCount": 10, "title": "Select Range", "format": "d"},
+          "axis": {"tickCount": 8, "title": "Select Range", "format": "d"},
           "scale": {"domain": [1980, 2020]}
         },
         "y": {
@@ -116,7 +138,12 @@
   ],
 
   "config": {
-    "axis": {"labelFontSize": 10, "titleFontSize": 12},
+    "axis": {
+      "labelFontSize": 10,
+      "titleFontSize": 12,
+      "labelColor": "#374151",
+      "titleColor": "#111827"
+    },
     "view": {"stroke": "transparent"}
   }
 }

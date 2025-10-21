@@ -158,16 +158,9 @@ body {
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-}
-.selector-panel label {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #111827;
-}
-.selector-panel select {
   flex: 1;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+  /* border-radius: 8px; */
+  /* border: 1px solid #d1d5db; */
   background-color: #f9fafb;
   padding: 8px;
   font-size: 14px;
@@ -209,23 +202,6 @@ body {
   margin-top: 24px;
   align-items: start;
   justify-items: center;
-}
-
-.shot-card {
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.shot-card h3 {
-  margin: 0 0 16px 0;
-  font-size: 18px;
-  color: #111827;
-  text-align: center;
 }
 
 /* ========== RESPONSIVE ========== */
@@ -327,5 +303,79 @@ body {
   .shot-map {
     width: 100%;
     height: auto;
+  }
+}
+
+/* ========== THREE-POINT REVOLUTION FIX ========== */
+#threept_decades {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+}
+
+.vega-embed,
+.vega-embed > div {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible;
+}
+
+/* ========== DYNASTY WAFFLE SECTION ========== */
+
+
+
+.waffle-section {
+  margin-top: 60px;
+  text-align: left;
+}
+
+.waffle-container {
+  width: 100%;
+  margin: 40px 0 20px 0;
+  display: block;
+  align-items: flex-start;
+}
+
+#dynasty_waffle {
+  width: 100%;
+  max-width: none;
+  /* margin-left: 0;              ensures full left alignment */
+  display: block;
+  text-align: left;
+}
+
+.waffle-section .section-footer{
+  margin-top: 24px;
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.8;
+  max-width: none;
+  text-align: left;
+  margin-left: 0;              /* aligns footer paragraph to start */
+}
+
+
+.waffle-section .section-header h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.waffle-section .section-header p {
+  color: #4b5563;
+  line-height: 1.8;
+  font-size: 15px;
+  max-width: none;
+}
+
+@media (max-width: 900px) {
+  .waffle-container {
+    flex-direction: column;
+    margin: 20px auto;
+  }
+  #dynasty_waffle {
+    max-width: 100%;
   }
 }

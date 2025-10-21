@@ -6,10 +6,10 @@
   "params": [
     {
       "name": "selectedEra",
-      "value": "60s-80s",
+      "value": "All",
       "bind": {
         "input": "select",
-        "options": ["60s-80s", "80s-00s", "90s", "00s-10s", "10s"],
+        "options": ["All", "Classic", "Modern"],
         "name": "Dynasty Era: "
       }
     }
@@ -22,12 +22,19 @@
     {"flatten": ["ring_sequence"], "as": ["ring_index"]},
     {"calculate": "floor(datum.ring_index / 5)", "as": "row"},
     {"calculate": "datum.ring_index % 5", "as": "col"},
-    {"filter": "datum.PeakEra == selectedEra"}
+    {
+      "calculate": "datum.PeakEra == '60s-80s' || datum.PeakEra == '80s-00s' ? 'Classic' : 'Modern'",
+      "as": "EraGroup"
+    },
+    {"filter": "selectedEra == 'All' ? true : datum.EraGroup == selectedEra"}
   ],
+
+  "padding": {"left": 0, "top": 12, "right": 0, "bottom": 0},
+  "columns": 4,
+  "spacing": 18,
 
   "facet": {
     "field": "FullName",
-    "columns": 4,
     "header": {
       "labelFontSize": 12,
       "labelFontWeight": "bold",
@@ -38,12 +45,12 @@
   },
 
   "spec": {
-    "width": 120,
-    "height": 120,
+    "width": 240,
+    "height": 140,
     "mark": {
       "type": "image",
-      "width": 24,
-      "height": 24
+      "width": 26,
+      "height": 26
     },
     "encoding": {
       "x": {"field": "col", "type": "ordinal", "axis": null},
@@ -63,16 +70,6 @@
         {"field": "ring_index", "title": "Ring Slot", "format": "d"}
       ]
     }
-  },
-
-  "title": {
-    "text": "🏆 Legacy & Dynasty: NBA Championships by Team",
-    "subtitle": "Each = one championship ring. Colors show era of dominance.",
-    "anchor": "start",
-    "fontSize": 20,
-    "subtitleFontSize": 13,
-    "subtitleColor": "#4b5563",
-    "color": "#111827"
   },
 
   "config": {
