@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Choropleth map showing NBA players per 100k residents by U.S. state.",
-  "width": 1000,
+  "width": 1100,
   "height": 550,
   "background": "#102a43",
 
