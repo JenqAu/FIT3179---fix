@@ -247,8 +247,8 @@ body {
   justify-content: center;
   gap: 40px;
   margin-top: 40px;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-left: 60px;
+  margin-right: 20px;
 }
 
 .shot-card {
@@ -274,6 +274,7 @@ body {
   margin-bottom: 16px;
   text-align: center;
   font-weight: 600;
+  transform: translateX(-35px);
 }
 
 .shot-map {
@@ -309,6 +310,11 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .shot-card h3 {
+    transform: none;
   }
   .shot-card {
     flex: 1 1 100%;
