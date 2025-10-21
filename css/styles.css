@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap');
+
 /* ========== GLOBAL ========== */
 :root {
   --nba-midnight: #050b19;
@@ -12,10 +14,53 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Manrope", "Inter", sans-serif;
   background: linear-gradient(135deg, var(--nba-midnight) 0%, #081a34 45%, #061023 100%);
   color: var(--nba-ice);
-  line-height: 1.5;
+  line-height: 1.65;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+p {
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  letter-spacing: 0.015em;
+  color: rgba(229, 241, 255, 0.82);
+  margin: 0 0 14px;
+  max-width: 720px;
+}
+
+.selector-hint,
+.section-footer,
+.shot-caption,
+.stat-caption {
+  font-family: "Manrope", "Inter", sans-serif;
+  letter-spacing: 0.015em;
+  line-height: 1.75;
+}
+
+strong {
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  color: var(--nba-ice);
+}
+
+em {
+  font-style: italic;
+  color: rgba(148, 163, 184, 0.78);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Rajdhani", "Bebas Neue", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   margin: 0;
 }
 
@@ -33,9 +78,34 @@ body {
 }
 
 .section-divider {
-  margin: 40px 0;
+  margin: 32px 0;
   border: none;
   border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.scene-header {
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+.scene-header h1 {
+  font-size: 26px;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  color: var(--nba-ice);
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(239, 35, 60, 0.45);
+  background: linear-gradient(120deg, rgba(5, 11, 25, 0.9) 0%, rgba(24, 46, 92, 0.65) 100%);
+  box-shadow: 0 12px 26px rgba(8, 20, 45, 0.55);
+}
+
+.scene-header p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: rgba(229, 241, 255, 0.78);
+  max-width: 720px;
 }
 
 /* ========== HEADER ========== */
@@ -57,19 +127,19 @@ body {
 }
 
 .project-title h1 {
-  font-family: "Bebas Neue", sans-serif;
-  font-size: 28px;
+  font-family: "Playfair Display", "Georgia", serif;
+  font-size: 34px;
+  letter-spacing: 0.08em;
   color: var(--nba-ice);
-  margin: 0;
-  letter-spacing: 1.5px;
   text-transform: uppercase;
+  font-weight: 600;
   text-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 /* ========== SECTION HEADERS & FOOTERS ========== */
 .section-header {
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   max-width: none;             /* removes centering constraint */
   padding-left: 0;             /* ensures full left alignment */
   position: relative;
@@ -77,11 +147,10 @@ body {
 
 .section-header h2 {
   color: var(--nba-ice);
-  font-size: 24px;
+  font-size: 26px;
   margin: 0 0 8px 0;
-  line-height: 1.3;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+  line-height: 1.35;
+  letter-spacing: 0.16em;
   display: inline-block;
   padding: 6px 14px;
   border-radius: 10px;
@@ -92,22 +161,23 @@ body {
 
 .section-header p {
   margin-top: 0;
-  font-size: 15px;
-  color: rgba(229, 241, 255, 0.72);
+  font-size: 16px;
+  color: rgba(229, 241, 255, 0.74);
   line-height: 1.7;
-  max-width: none;
+  max-width: 720px;
   text-align: left;
 }
 
 /* --- Footer text (aligned to start as well) --- */
 .section-footer {
   text-align: left;
-  margin-top: 24px;
-  max-width: none;
+  margin-top: 16px;
   padding-left: 0;
-  color: rgba(226, 232, 240, 0.7);
-  font-size: 15px;
-  line-height: 1.8;
+  color: rgba(226, 232, 240, 0.74);
+  font-size: 16px;
+  line-height: 1.75;
+  font-family: "Manrope", "Inter", sans-serif;
+  max-width: 780px;
 }
 
 .section-footer strong {
@@ -117,6 +187,39 @@ body {
 .section-footer em {
   color: var(--nba-royal);
   font-style: italic;
+}
+
+.metadata-section {
+  margin-bottom: 0;
+  padding: 8px 0 0;
+}
+
+.metadata-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metadata-list {
+  list-style: none;
+  padding: 0;
+  margin: 2px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metadata-list a {
+  color: var(--nba-gold);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-size: 14px;
+}
+
+.metadata-list a:hover {
+  color: var(--nba-ice);
+  text-decoration: underline;
 }
 
 
@@ -158,37 +261,39 @@ body {
   width: 100%;
   border-radius: 10px;
   margin-bottom: 10px;
-  border: 2px solid rgba(250, 204, 21, 0.42);
+  border: 2px solid rgba(255, 0, 0, 0.42);
   box-shadow: 0 14px 32px rgba(6, 16, 35, 0.55);
 }
 .player-card h3 {
   margin: 0;
-  font-size: 18px;
-  color: var(--nba-gold);
+  font-size: 20px;
+  color: "Black";
   font-weight: 600;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.14em;
 }
 
 /* Player Stats */
 .player-stats h2 {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--nba-ice);
   margin-top: -5px;
   margin-bottom: 5px;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.16em;
 }
 .player-stats ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: 14px;
-  line-height: 1.7;
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
   color: rgba(226, 232, 240, 0.78);
+  letter-spacing: 0.015em;
 }
 .stat-caption {
   margin-top: 10px;
-  font-size: 13px;
-  color: rgba(148, 163, 184, 0.78);
+  font-size: 14px;
+  color: rgba(148, 163, 184, 0.8);
   font-style: italic;
 }
 
@@ -205,27 +310,30 @@ body {
 
 .selector-panel label {
   margin-bottom: 4px;
+  font-family: "Rajdhani", "Bebas Neue", sans-serif;
   font-weight: 600;
   color: var(--nba-ice);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.22em;
+  font-size: 13px;
 }
 
 #player-select {
   margin: 0; /* removes excess spacing */
-  padding: 4px;
+  padding: 6px 8px;
+  font-family: "Manrope", "Inter", sans-serif;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.45;
   border-radius: 8px;
   border: none;
   background: rgba(8, 21, 42, 0.9);
   color: var(--nba-ice);
   box-shadow: none;
+  letter-spacing: 0.01em;
 }
 
 .selector-hint {
-  font-size: 12px;
-  color: rgba(148, 163, 184, 0.68);
+  font-size: 13px;
+  color: rgba(148, 163, 184, 0.72);
   margin-top: 4px; /* tighter space to dropdown */
   text-align: left;
   line-height: 1.4;
@@ -315,13 +423,13 @@ body {
 .shot-card:hover { transform: none; }
 
 .shot-card h3 {
-  font-size: 18px;
+  font-size: 20px;
   color: var(--nba-ice);
   margin-bottom: 16px;
   text-align: center;
   font-weight: 600;
   transform: translateX(-35px);
-  letter-spacing: 1px;
+  letter-spacing: 0.18em;
 }
 
 .shot-map {
@@ -340,9 +448,9 @@ body {
 
 .shot-caption {
   margin-top: 16px;
-  font-size: 14px;
-  color: rgba(226, 232, 240, 0.75);
-  line-height: 1.6;
+  font-size: 15px;
+  color: rgba(226, 232, 240, 0.78);
+  line-height: 1.75;
   text-align: left;
   max-width: 440px;
   align-self: flex-start;
@@ -385,24 +493,6 @@ body {
   overflow: visible;
   margin: 0;
   padding: 0;
-}
-
-.vega-embed,
-.vega-embed > div {
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow: visible;
-}
-
-.vega-embed {
-  background: linear-gradient(155deg, rgba(9, 20, 40, 0.92) 0%, rgba(12, 31, 63, 0.88) 100%);
-  border-radius: 18px;
-  /* border: 1px solid rgba(37, 99, 235, 0.35); */
-  /* box-shadow: 0 22px 48px rgba(5, 12, 28, 0.65); */
-}
-
-.vega-embed > div {
-  border-radius: inherit;
 }
 
 .radar-panel .vega-embed,
@@ -450,13 +540,8 @@ body {
   text-align: left;
 }
 
-.waffle-section .section-footer{
+.waffle-section .section-footer {
   margin-top: 24px;
-  color: rgba(229, 241, 255, 0.7);
-  font-size: 15px;
-  line-height: 1.8;
-  max-width: none;
-  text-align: left;
   margin-left: 0;              /* aligns footer paragraph to start */
 }
 
@@ -489,10 +574,17 @@ body {
 /* Make all charts look soft, flat, and integrated with the background */
 .vega-embed,
 .vega-embed > div {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible;
   background: rgba(8, 18, 38, 0.4) !important; /* subtle glass effect */
   border: none !important;
   box-shadow: none !important;
   border-radius: 12px;
+}
+
+.vega-embed > div {
+  border-radius: inherit;
 }
 
 /* Optional: Slight transparency for smoother blend */

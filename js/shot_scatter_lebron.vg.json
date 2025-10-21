@@ -15,7 +15,7 @@
   ],
 
   "data": {
-    "url": "../data/shot_data_lebron_2012_13.csv",
+    "url": "https://raw.githubusercontent.com/JenqAu/FIT3179---fix/refs/heads/backup-main/data/shot_data_lebron_2012_13.csv",
     "format": {
       "type": "csv",
       "parse": { "LOC_X": "number", "LOC_Y": "number" }
@@ -24,7 +24,9 @@
 
   "transform": [
     { "filter": "datum.PLAYER_NAME == 'LeBron James'" },
-    { "filter": "datum.SEASON == '2012-13 Season'" }
+  { "filter": "datum.SEASON == '2012-13 Season'" },
+  { "calculate": "datum.SHOT_MADE_FLAG == 1 ? 'Made' : 'Missed'", "as": "ShotOutcome" },
+  { "calculate": "datum.SHOT_TYPE == 3 ? '3PT Field Goal' : '2PT Field Goal'", "as": "ShotTypeLabel" }
   ],
 
   "vconcat": [
@@ -32,7 +34,7 @@
       "width": 440,
       "height": 70,
       "data": {
-        "url": "../data/shot_data_lebron_2012_13.csv",
+        "url": "https://raw.githubusercontent.com/JenqAu/FIT3179---fix/refs/heads/backup-main/data/shot_data_lebron_2012_13.csv",
         "format": { "type": "csv", "parse": { "LOC_X": "number", "LOC_Y": "number" } }
       },
       "transform": [
@@ -98,7 +100,12 @@
                   "type": "quantitative",
                   "scale": { "domain": [{ "expr": "yMin" }, { "expr": "yMax" }], "nice": false },
                   "axis": null
-                }
+                },
+                "tooltip": [
+                  {"field": "PLAYER_NAME", "title": "Player"},
+                  {"field": "ShotTypeLabel", "title": "Shot Type"},
+                  {"field": "SHOT_DISTANCE", "title": "Distance (ft)", "format": ".0f"}
+                ]
               }
             }
           ],
@@ -109,7 +116,7 @@
           "width": 70,
           "height": 414,
           "data": {
-            "url": "../data/shot_data_lebron_2012_13.csv",
+            "url": "https://raw.githubusercontent.com/JenqAu/FIT3179---fix/refs/heads/backup-main/data/shot_data_lebron_2012_13.csv",
             "format": { "type": "csv", "parse": { "LOC_X": "number", "LOC_Y": "number" } }
           },
           "transform": [

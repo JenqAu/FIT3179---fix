@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "NBA team dynasties shown as symbolic waffle charts — each 💍 = one championship ring.",
-  "data": {"url": "data/nba_team_championships.csv"},
+  "data": {"url": "https://raw.githubusercontent.com/JenqAu/FIT3179---fix/refs/heads/backup-main/data/nba_team_championships.csv"},
   "background": "transparent",
 
   "params": [
@@ -62,8 +62,7 @@
       "tooltip": [
         {"field": "FullName", "title": "Team"},
         {"field": "rings", "title": "Total Championships"},
-        {"field": "PeakEra", "title": "Dynasty Era"},
-        {"field": "ring_index", "title": "Ring Slot", "format": "d"}
+        {"field": "PeakEra", "title": "Dynasty Era"}
       ]
     }
   },

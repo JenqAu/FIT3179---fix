@@ -19,7 +19,7 @@
   "data": [
     {
       "name": "table",
-      "url": "../data/top20_players_radar_normalized.csv",
+      "url": "https://raw.githubusercontent.com/JenqAu/FIT3179---fix/refs/heads/backup-main/data/top20_players_radar_normalized.csv",
       "format": {"type": "csv"},
       "transform": [
         {
