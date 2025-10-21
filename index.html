@@ -115,11 +115,20 @@
 
     <hr class="section-divider">
 
-    <!-- Scene 3: Shot Chart -->
+    <!-- Scene 3: Shot Chart Comparison -->
     <section>
-      <h2>Shot Map of a Champion</h2>
-      <p>Every shot tells a story. Trace the rhythm and range of basketball’s most iconic scorers.</p>
-      <div id="shot_chart"></div>
+      <h2>Signature Shot Maps: Jordan vs. LeBron</h2>
+      <p>Compare how two eras of dominance attacked the floor — Jordan’s mid-range mastery versus LeBron’s downhill drives and rim pressure.</p>
+      <div class="shot-comparison">
+        <div class="shot-card">
+          <h3>Michael Jordan · 1996-97</h3>
+          <div id="shot_chart_mj"></div>
+        </div>
+        <div class="shot-card">
+          <h3>LeBron James · 2012-13</h3>
+          <div id="shot_chart_lebron"></div>
+        </div>
+      </div>
     </section>
 
     <hr class="section-divider">
@@ -157,7 +166,8 @@
       await vegaEmbed('#choropleth_map', 'js/choropleth_map.vg.json', { actions: false });
       const radarResult = await vegaEmbed('#radar_chart', 'js/top_players_radar.vg.json', { actions: false });
       const radarView = radarResult.view;
-      await vegaEmbed('#shot_chart', 'js/shot_scatter_joint.vg.json', { actions: false });
+  await vegaEmbed('#shot_chart_mj', 'js/shot_scatter_joint.vg.json', { actions: false });
+  await vegaEmbed('#shot_chart_lebron', 'js/shot_scatter_lebron.vg.json', { actions: false });
       await vegaEmbed('#threept_decades', 'js/threept_decades.vg.json', { actions: false });
       await vegaEmbed('#momentum_graph', 'js/nba_momentum_stream.vg.json', { actions: false });
       await vegaEmbed('#dynasty_waffle', 'js/nba_dynasty_waffle.vg.json', { actions: false });
